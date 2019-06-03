@@ -4,7 +4,7 @@
 
 1. Click the top right where it says **Remix to Edit :microphone:**
 2. Give your new project a name. Note that you can start the name with a gamemode code (seen below) to specify its gamemode.
-3. Your private server name will be at <http://arras.io/#private=arras-template.glitch.me> (replace `arras-template` with it's new name)
+3. Your private server name will be at arrax-io.glitch.me/#private=arrax-template.glitch.me (replace `arras-template` with it's new name)
 
 ## More Information
 
@@ -13,14 +13,14 @@
 ```
 SECRET=aSecretPasswordHere
 ```
-3. Open the private server with <http://arras.io/#private=arras-template.glitch.me;aSecretPasswordHere> (replace `aSecretPasswordHere` with the password)
+3. Open the private server with arrax-io.glitch.me/#private=arrax-template.glitch.me;aSecretPasswordHere (replace `aSecretPasswordHere` with the password)
 4. The map/config data are in the `config.js` file
 5. The tank data are in the `lib/definitions.js` file
 6. Other stuff (score curve, stat amount) are in the `server.js` file
 
 ## Gamemode Code
 
-You can start the name with a gamemode code to specify its gamemode, such as `f-arras-server` where `f` is the gamemode code.
+You can start the name with a gamemode code to specify its gamemode, such as `f-arrax-template` where `f` is the gamemode code.
 
 Parts of the gamemode code must appear in the order below, all of which are optional:
 - `p` for Private
