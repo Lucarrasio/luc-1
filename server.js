@@ -4585,7 +4585,7 @@ var maintainloop = (() => {
                 util.log('[SPAWN] Preparing to spawn...');
                 timer = 0;
                 let choice = [];
-                switch (ran.chooseChance(1, 1, 1, 1, 1, 1)) {
+                switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1)) {
                     case 0: 
                         choice = [[Class.elite_destroyer], 2, 'a', 'nest'];
                         break;
@@ -4606,6 +4606,10 @@ var maintainloop = (() => {
                         break;
                     case 5: 
                         choice = [[Class.elite_gunner], 2, 'a', 'nest'];
+                        break;
+                    case 6: 
+                        choice = [[Class.elite_trapper], 1, 'a', 'nest'];
+                     sockets.broadcast('Traps ARE OP...');
                         break;
                 }
                 boss.prepareToSpawn(...choice);
