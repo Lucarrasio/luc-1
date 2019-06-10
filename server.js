@@ -4585,7 +4585,7 @@ var maintainloop = (() => {
                 util.log('[SPAWN] Preparing to spawn...');
                 timer = 0;
                 let choice = [];
-                switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1)) {
+                switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)) {
                     case 0: 
                         choice = [[Class.elite_destroyer], 2, 'a', 'nest'];
                         break;
@@ -4610,6 +4610,20 @@ var maintainloop = (() => {
                     case 6: 
                         choice = [[Class.elite_trapper], 1, 'a', 'nest'];
                      sockets.broadcast('Traps ARE OP...');
+                        break;
+                    case 7: 
+                   
+                        choice = [[Class.summoner, Class.summonermk2,], 2, 'castle', 'norm']; 
+                        sockets.broadcast('Never has the phrase "Square Up" been more acurate...');
+                        break;
+                     case 8: 
+                        choice = [[Class.skimboss, Class.summoner, Class.summonermk2, Class.palisade, Class.elite_destroyer, Class.elite_gunner, Class.elite_sprayer, Class.elite_trapper], 3, 'a', 'norm']; 
+                        sockets.broadcast('Some bosses are on their ways...');
+                        break;
+                    case 9: 
+                        choice = [[Class.sassafras], 1, 'a', 'norm']; 
+                        sockets.broadcast('All hail LORD SASSAFRAS!!!');
+                        sockets.broadcast('PS. I like crackers...')
                         break;
                 }
                 boss.prepareToSpawn(...choice);
