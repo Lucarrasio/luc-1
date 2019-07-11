@@ -28,6 +28,7 @@ Array.prototype.remove = index => {
 };
 
 // Set up room.
+let fps = 0
 global.fps = "Unknown";
 var roomSpeed = c.gameSpeed;
 const room = {
@@ -65,14 +66,46 @@ const room = {
         });
         room[type] = output;
     };
-    room.findType('nest');
-    room.findType('norm');
-    room.findType('bas1');
-    room.findType('bas2');
-    room.findType('bas3');
-    room.findType('bas4');
-    room.findType('roid');
-    room.findType('rock');
+room.findType('nest');
+room.findType('norm');
+ room.findType('bas1', 'bap1', 'bad1')
+    room.findType('bas2', 'bap2', 'bad2')
+    room.findType('bas3', 'bap3', 'bad3')
+    room.findType('bas4', 'bap4', 'bad4')
+    room.findType('bap1')
+    room.findType('bap2')
+    room.findType('bap3')
+    room.findType('bap4')
+    room.findType('bad1')
+    room.findType('bad2')
+    room.findType('bad3')
+    room.findType('bad4')
+
+room.findType('roid');
+room.findType('rock');
+room.findType('lava');
+room.findType('dom1');
+room.findType('dom2');
+room.findType('dom3');
+room.findType('dom4');
+room.findType('wal1');
+room.findType('wal2');
+room.findType('wal3');
+room.findType('wal4');
+room.findType('wal4');
+room.findType('bas8');
+room.findType('bas9');
+room.findType('bot4');
+room.findType('bot3');
+room.findType('bot2');
+room.findType('bot1');
+room.findType('edge');
+ //portals
+    room.findType('prti');
+    room.findType('prto');
+    room.findType('port');
+ room.findType('door');
+ room.findType('ctrl');
     room.nestFoodAmount = 1.5 * Math.sqrt(room.nest.length) / room.xgrid / room.ygrid;
     room.random = () => {
         return {
@@ -1563,6 +1596,34 @@ class Entity {
         this.master = master;
         this.source = this;
         this.parent = this;
+        this.poisoned = false
+        this.poison = false
+        this.poisonedBy = -1
+        this.poisonLevel = 20
+        this.poisonToApply = 0
+        this.showpoison = false
+        this.poisonTimer = 0
+         this.ice = false
+        this.iceedBy = -1
+        this.iceLevel = 0
+        this.iceToApply = 0
+        this.showice = false
+        this.iceTimer = 0 
+        this.shocked = false
+        this.shock = false
+        this.shockedBy = -1
+        this.shockLevel = 20
+        this.shockToApply = 0
+        this.shockburn = false
+        this.shockTimer = 0
+        this.bruned = false
+        this.burn = false
+        this.burnedBy = -1
+        this.burnLevel = 80
+        this.burnToApply = 0
+        this.showburn = false
+        this.burnTimer = 0
+       this.passive = false;
         this.control = {
             target: new Vector(0, 0),
             goal: new Vector(0, 0),
@@ -1763,6 +1824,9 @@ class Entity {
         if (set.PERSISTS_AFTER_DEATH != null) { 
             this.settings.persistsAfterDeath = set.PERSISTS_AFTER_DEATH; 
         }
+        if (set.PASSIVE != null) { 
+            this.passive = set.PASSIVE; 
+        }
         if (set.CLEAR_ON_MASTER_UPGRADE != null) { 
             this.settings.clearOnMasterUpgrade = set.CLEAR_ON_MASTER_UPGRADE; 
         }
@@ -1771,6 +1835,75 @@ class Entity {
         }
         if (set.ACCEPTS_SCORE != null) { 
             this.settings.acceptsScore = set.ACCEPTS_SCORE; 
+        }
+       if (set.POISON != null) {
+          this.poison = set.POISON
+        }
+        if (set.POISONED != null) {
+          this.poisoned = set.POISONED
+        }
+        if (set.POISON_TO_APPLY != null) {
+          this.poisonToApply = set.POISON_TO_APPLY
+        }
+        if (set.SHOWPOISON != null) {
+          this.showpoison = set.SHOWPOISON
+        }
+      /* if (set.POWER != null) {
+          this.power = set.POWER
+        }
+        if (set.POWERED != null) {
+          this.powered = set.POWERED
+        }
+        if (set.POWER_TO_APPLY != null) {
+          this.powerToApply = set.POWER_TO_APPLY
+        }
+        if (set.SHOWPOWER != null) {
+          this.showpower = set.SHOWPOWER
+        } */
+       if (set.BURN != null) {
+          this.burn = set.BURN
+        }
+        if (set.BURNED != null) {
+          this.burned = set.BURNED
+        }
+        if (set.BURN_TO_APPLY != null) {
+          this.burnToApply = set.BURN_TO_APPLY
+        }
+        if (set.SHOWBURN != null) {
+          this.showburn = set.SHOWBURN
+        }
+       if (set.SHOCK != null) {
+          this.shock = set.SHOCK
+        }
+        if (set.SHOCKED != null) {
+          this.shocked = set.SHOCKED
+        }
+        if (set.SHOCK_TO_APPLY != null) {
+          this.shockToApply = set.SHOCK_TO_APPLY
+        }
+        if (set.SHOWSHOCK != null) {
+          this.showshock = set.SHOWSHOCK 
+        }
+       if (set.ICE_TO_APPLY != null) {
+          this.iceToApply = set.ICE_TO_APPLY
+        }
+        if (set.SHOWICE != null) {
+          this.showice = set.SHOWICE
+        }
+       if (set.ICE != null) {
+          this.ice = set.ICE
+        }
+        if (set.ICEED != null) {
+          this.iceed = set.ICEED
+        }
+        if (set.ICE_TO_APPLY != null) {
+          this.iceToApply = set.ICE_TO_APPLY
+        }
+        if (set.SHOWICE != null) {
+          this.showice = set.SHOWICE
+        }
+        if (set.WATER_SLOW != null) {
+          this.WATER_SLOW = set.WATER_SLOW
         }
         if (set.OBSTACLE != null) { 
             this.settings.obstacle = set.OBSTACLE; 
@@ -1853,7 +1986,7 @@ class Entity {
             this.skill.set(set.SKILL);
         } 
         if (set.LEVEL != null) {
-            if (set.LEVEL === -1) {
+            if (set.LEVEL === 45) {
                 this.skill.reset();
             }
             while (this.skill.level < c.SKILL_CHEAT_CAP && this.skill.level < set.LEVEL) {
@@ -2133,6 +2266,112 @@ class Entity {
                 };
             }
             break;
+             case 'rainbow':
+            this.color = 'rainbow';
+            break;
+             case 'explode':
+                this.SIZE += 10;
+                this.DAMAGE += 3;
+                break;
+             case 'poison':
+            this.color = 70;
+             this.SIZE += 1;
+                this.DAMAGE += 3;
+this.guns.color = 4;
+            this.maxSpeed = this.topSpeed;
+            break;
+             case 'poisonColor':
+            this.color = 70;
+            break;
+              case 'flame':
+            this.color = 23;
+ this.SIZE += 5;
+            if(this.SIZE >= 40)
+            {
+              this.SIZE = 40;
+            }
+this.guns.color = 4;
+            this.maxSpeed = this.topSpeed;
+            break;
+             case 'flameColor':
+            this.color = 23;
+            break;   
+          case 'giffard':
+            this.color = 50;
+            break;
+                  case 'nuke':
+            this.color = 19;
+             this.SIZE += 2;
+                this.DAMAGE += 6;
+this.guns.color = 19;
+            this.maxSpeed = this.topSpeed;
+            break;
+             case 'nukeColor':
+            this.color = 19;
+            break;
+            case 'red':
+            this.color = 12;
+            break;
+            case 'orange':
+            this.color = 2;
+            break;
+            case 'yellow':
+            this.color = 3;
+            break;
+            case 'green':
+            this.color = 11;
+            break;
+            case 'blue':
+            this.color = 10;
+            break;
+            case 'purple':
+            this.color = 14;
+            break;
+                case 'teal':
+            this.color = 0;
+            break;
+                case 'purple':
+            this.color = 15;
+            break;
+                case 'lgreen':
+            this.color = 1;
+            break;
+                case 'lavender':
+            this.color = 4;
+            break;
+                case 'pink':
+            this.color = 5;
+            break;
+                case 'vlgray':
+            this.color = 6;
+            break;
+                case 'lgray':
+            this.color = 7;
+            break;
+                case 'guiwhite':
+            this.color = 8;
+            break;
+                case 'gold':
+            this.color = 13;
+            break;
+                case 'magenta':
+            this.color = 15;
+            break;
+                case 'gray':
+            this.color = 16;
+            break;
+                case 'dgray':
+            this.color = 17;
+            break;
+                case 'white':
+            this.color = 18;
+            break;
+                case 'guiblack':
+            this.color = 19;
+            break;
+                case 'brown':
+            this.color = 20;
+            break;
         case 'swarm': 
             this.maxSpeed = this.topSpeed;
             let l = util.getDistance({ x: 0, y: 0, }, g) + 1;
@@ -2154,6 +2393,77 @@ class Entity {
             }
             break;        
         case 'chase':
+            if (gactive) {
+                let l = util.getDistance({ x: 0, y: 0, }, g);
+                if (l > this.size * 2) {
+                    this.maxSpeed = this.topSpeed;
+                    let desiredxspeed = this.topSpeed * g.x / l,
+                        desiredyspeed = this.topSpeed * g.y / l;
+                    engine = {                
+                        x: (desiredxspeed - this.velocity.x) * a,
+                        y: (desiredyspeed - this.velocity.y) * a,
+                    };
+                } else {
+                    this.maxSpeed = 0;
+                }   
+            } else {
+                this.maxSpeed = 0;
+            }
+            break;
+               case 'xyv1':
+            this.color = 5;
+            if (gactive) {
+                let l = util.getDistance({ x: 0, y: 0, }, g);
+                if (l > this.size * 2) {
+                    this.maxSpeed = this.topSpeed;
+                    let desiredxspeed = this.topSpeed * g.x / l,
+                        desiredyspeed = this.topSpeed * g.y / l;
+                    engine = {                
+                        x: (desiredxspeed - this.velocity.x) * a,
+                        y: (desiredyspeed - this.velocity.y) * a,
+                    };
+                } else {
+                    this.maxSpeed = 0;
+                }   
+            } else {
+                this.maxSpeed = 0;
+            }
+            break;
+             case 'xyv2':
+           this.maxSpeed = 0;            
+            if (this.topSpeed) {
+                this.damp = a / this.topSpeed;
+            }
+            if (gactive) {
+                let len = Math.sqrt(g.x * g.x + g.y * g.y);
+                engine = {
+                    x: a * g.x / len,
+                    y: a * g.y / len,
+                };
+            }
+             this.color = 13;
+            break;
+             case 'bow':
+            this.color = 2;
+            if (gactive) {
+                let l = util.getDistance({ x: 0, y: 0, }, g);
+                if (l > this.size * 2) {
+                    this.maxSpeed = this.topSpeed;
+                    let desiredxspeed = this.topSpeed * g.x / l,
+                        desiredyspeed = this.topSpeed * g.y / l;
+                    engine = {                
+                        x: (desiredxspeed - this.velocity.x) * a,
+                        y: (desiredyspeed - this.velocity.y) * a,
+                    };
+                } else {
+                    this.maxSpeed = 0;
+                }   
+            } else {
+                this.maxSpeed = 0;
+            }
+            break;
+              case 'xyv3':
+            this.color = 32;
             if (gactive) {
                 let l = util.getDistance({ x: 0, y: 0, }, g);
                 if (l > this.size * 2) {
@@ -2292,6 +2602,77 @@ class Entity {
             nullVector(this.accel); nullVector(this.velocity);
             return 0;
         }
+        if (this.type !== undefined) {
+              let loc = { x: this.x, y: this.y, };
+              if (room.isIn('prti', loc)) {
+                var gridpos = {
+                    x: Math.floor(loc.x * room.xgrid / room.width),
+                    y: Math.floor(loc.y * room.ygrid / room.height),
+                }
+                var z = 0
+                for (var i = 0; i < room['prti'].length; i++) {
+                    var amdgridportin = {
+                        y: (room['prti'][i].y * room.ygrid / room.height) - 0.5,
+                        x: (room['prti'][i].x * room.xgrid / room.width) - 0.5,
+                    }
+                    if ((amdgridportin.x === gridpos.x) && (amdgridportin.y === gridpos.y)) {
+                        z = i
+                    }
+                }
+                let cent = room['prti'][z]
+                let divForce = this.type == 'tank' ? 110 : 100
+                this.velocity.x -= (loc.x - cent.x) / divForce
+                this.velocity.y -= (loc.y - cent.y) / divForce
+                if ((loc.x < room['prti'][z].x + (10 / room.ygrid * (room.height / 100))) && (loc.x > room['prti'][z].x - (10 / room.ygrid * (room.height / 100))) && (loc.y < room['prti'][z].y + (10 / room.ygrid * (room.height / 100))) && loc.y > room['prti'][z].y - (10 / room.ygrid * (room.height / 100))) {
+                    this.x = room['prto'][0].x
+                    this.y = room['prto'][0].y
+                    this.velocity.x += (ran.randomRange(0, 1) < 0.5) ? ran.randomRange(20, 30) : ran.randomRange(-30, -20)
+                    this.velocity.y += (ran.randomRange(0, 1) < 0.5) ? ran.randomRange(20, 30) : ran.randomRange(-30, -20)
+
+                }
+              }
+            }
+        if (this.type !== undefined) {
+              let loc = { x: this.x, y: this.y, };
+              if (room.isIn('port', loc)) {
+                var gridpos = {
+                    x: Math.floor(loc.x * room.xgrid / room.width),
+                    y: Math.floor(loc.y * room.ygrid / room.height),
+                }
+                var z = 0
+                for (var i = 0; i < room['port'].length; i++) {
+                    var amdgridport = {
+                        y: (room['port'][i].y * room.ygrid / room.height) - 0.5,
+                        x: (room['port'][i].x * room.xgrid / room.width) - 0.5,
+                    }
+                    if ((amdgridport.x === gridpos.x) && (amdgridport.y === gridpos.y)) {
+                        z = i
+                    }
+                }
+                let cent = room['port'][z]
+                let x = (z >= room['port'].length - 1) ? 0 : z + 1
+                let divForce = this.type == 'tank' ? 110 : 100
+                this.velocity.x -= (loc.x - cent.x) / divForce
+                this.velocity.y -= (loc.y - cent.y) / divForce
+                if ((loc.x < room['port'][z].x + (10 / room.ygrid * (room.height / 100))) && (loc.x > room['port'][z].x - (10 / room.ygrid * (room.height / 100))) && (loc.y < room['port'][z].y + (10 / room.ygrid * (room.height / 100))) && loc.y > room['port'][z].y - (10 / room.ygrid * (room.height / 100))) {
+                    this.x = room['port'][x].x
+                    this.y = room['port'][x].y
+                    this.velocity.x += (ran.randomRange(0, 1) < 0.5) ? ran.randomRange(20, 30) : ran.randomRange(-30, -20)
+                    this.velocity.y += (ran.randomRange(0, 1) < 0.5) ? ran.randomRange(20, 30) : ran.randomRange(-30, -20)
+                }
+              }
+            }
+       if (this.type !== undefined) {
+              let loc = { x: this.x, y: this.y, };
+              if (room.isIn('edge', loc)) {
+                 if (!this.settings.canGoOutsideRoom) {
+            this.accel.x -= Math.min(this.x - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.x -= Math.max(this.x + this.realSize - room.width - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y -= Math.min(this.y - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+            this.accel.y -= Math.max(this.y + this.realSize - room.height - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
+        }
+              }
+            }
         if (!this.settings.canGoOutsideRoom) {
             this.accel.x -= Math.min(this.x - this.realSize + 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
             this.accel.x -= Math.max(this.x + this.realSize - room.width - 50, 0) * c.ROOM_BOUND_FORCE / roomSpeed;
@@ -2304,13 +2685,29 @@ class Entity {
                 (this.team !== -1 && room.isIn('bas1', loc)) ||
                 (this.team !== -2 && room.isIn('bas2', loc)) ||
                 (this.team !== -3 && room.isIn('bas3', loc)) ||
-                (this.team !== -4 && room.isIn('bas4', loc))
+                (this.team !== -4 && room.isIn('bas4', loc)) ||
+              (this.team !== -1 && room.isIn('bap1', loc)) ||
+                (this.team !== -2 && room.isIn('bap2', loc)) ||
+                (this.team !== -3 && room.isIn('bap3', loc)) ||
+                (this.team !== -4 && room.isIn('bap4', loc)) ||
+                (room.isIn('edge', loc))
             ) { this.kill(); }
+        }
+      if (this.type === 'tank' || this.type === 'bullet' || this.type === 'trap' || this.type === 'food') { 
+            let loc = { x: this.x, y: this.y, };
+          if (
+                (room.isIn('edge', loc))
+            ) { (this.WATER_SLOW === false) ? this.maxSpeed -= 2 : this.maxSpeed -= 0;
+              this.WATER_SLOW = true}
         }
     }
 
     contemplationOfMortality() {
         if (this.invuln) {
+            this.damageRecieved = 0;
+            return 0;
+        }
+       if (this.passive) {
             this.damageRecieved = 0;
             return 0;
         }
@@ -2472,12 +2869,89 @@ class Entity {
         // Remove from the collision grid
         this.removeFromGrid();
         this.isGhost = true;
+       if (this.ondead) this.ondead()
     }    
     
     isDead() {
         return this.health.amount <= 0; 
     }
 }
+
+
+function closeArena() {
+  ArenaClosed();
+  
+}
+
+  var loops = 0;
+function ArenaClosed()
+      {
+
+  loops++
+  if(loops < 31) {
+     setTimeout (ArenaClosed, 1000);
+   
+    } 
+
+  else {
+     sockets.broadcast("Closing!"); 
+    
+    process.exit();
+     global.restart
+  }
+}
+
+
+  let spawnarenacloser = (loc, mode, type) => {
+      let o = new Entity(loc)
+      o.define(type)
+      o.team = mode || -100
+      o.color = [3][-mode]
+        }
+
+function threeHourRestart() {
+  restart3hour();
+}
+var loops = 0;
+function restart3hour() {
+  loops++
+  if(loops < 3600000) {
+    setTimeout (restart3hour, 1000);
+  }
+  else {
+    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
+    ArenaClosed();
+    if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+ if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+ if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+ if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+
+    
+  }
+}
+function modeclose() {
+  closemode();
+}
+var loops = 0;
+function closemode() {
+  loops++
+  if(loops < 10) {
+    setTimeout (closemode, 1000);
+  }
+  else {
+    sockets.broadcast("ARENA CLOSED: NO PLAYERS MAY JOIN!");
+    ArenaClosed();
+    if  (room.gameMode === 'tdm')  room['nest'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+ if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+ if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+ if  (room.gameMode === 'tdm')  room['port'].forEach((loc) => { spawnarenacloser(loc, -0, ran.choose([ Class.modearenacloser, Class.modearenacloser, Class.modearenacloser])); });
+
+    
+  }
+}
+
+
+
 
 /*** SERVER SETUP ***/
 // Make a speed monitor
@@ -2809,6 +3283,16 @@ const sockets = (() => {
                 socket.talk('m', message);
             });
         },
+       // ======================================================
+        // Chat System.
+        // ======================================================
+         broadcastChatMessage: (message) => {
+            clients.forEach(socket => {                
+                socket.talk('h', message);
+            });
+        },
+        // ======================================================
+
         connect: (() => {
             // Define shared functions
             // Closing the socket
@@ -2906,7 +3390,15 @@ const sockets = (() => {
                     if (players.indexOf(socket.player) != -1) { util.remove(players, players.indexOf(socket.player));  }
                     // Free the old view
                     if (views.indexOf(socket.view) != -1) { util.remove(views, views.indexOf(socket.view)); socket.makeView(); }
-                    socket.player = socket.spawn(name);     
+                    socket.player = socket.spawn(name);   
+                  
+                  // socket.player = socket.spawn(name);     
+                      // ===========================================
+                    // Chat System.
+                    // ===========================================
+                    socket.player.name = name;
+                    // ===========================================
+
                     // Give it the room state
                     if (!needsRoom) { 
                         socket.talk(
@@ -2923,6 +3415,40 @@ const sockets = (() => {
                     // Log it    
                     util.log('[INFO] ' + (m[0]) + (needsRoom ? ' joined' : ' rejoined') + ' the game! Players: ' + players.length);   
                 } break;
+                     // =================================================================================
+                // Chat System.
+                // =================================================================================
+                case 'h':
+                        if (!socket.status.deceased) 
+                        {   
+                            // Basic chat spam control.     
+                            if (util.time() - socket.status.lastChatTime >= 1000)
+                            {
+                                let message = m[0].replace(c.BANNED_CHARACTERS_REGEX, '');
+                                let maxLen = 100; 
+
+                                // Verify it
+                                if (typeof message != 'string') {
+                                    socket.kick('Bad chat message request.');
+                                    return 1;
+                                }
+                                if (encodeURI(message).split(/%..|./).length > maxLen) {
+                                    socket.kick('Overly-long chat message.');
+                                    return 1;
+                                }
+
+                                let playerName = socket.player.name ? socket.player.name :'Unnamed Player';
+                                let chatMessage = playerName + ': ' + message;                        
+                                let trimmedMessage = chatMessage.length > maxLen ? chatMessage.substring(0, maxLen - 3) + "..." : chatMessage.substring(0, maxLen);                                 
+                                                                                            
+                                sockets.broadcastChatMessage(trimmedMessage);
+                                // Basic chat spam control.
+                                socket.status.lastChatTime = util.time();
+                            }                                                     
+                        }
+                        
+                        break;
+                // =================================================================================
                 case 'S': { // clock syncing
                     if (m.length !== 1) { socket.kick('Ill-sized sync packet.'); return 1; }
                     // Get data
@@ -3051,8 +3577,41 @@ const sockets = (() => {
                 case '0': { // testbed cheat
                     if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
                     // cheatingbois
-                    if (player.body != null) { if (socket.key === process.env.SECRET) {
+                     if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
                         player.body.define(Class.testbed);
+                    } }
+                } break;
+                    break;
+                     case 'b': { // Basic cheat
+                    if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
+                    // cheatingbois
+                    if (player.body != null) { if (socket.key === process.env.SECRET) {
+                        player.body.define(Class.basic);
+                    } }
+                } break;
+                     case '*': { // Arena Closer cheat
+                    if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
+                    // cheatingbois
+                    if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                        player.body.define(Class.arenacloser);
+                    } }
+                } break;
+                     case '=': { // Random Boss cheat
+                    if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
+                    // cheatingbois
+                        let arrayOfClasses = [ Class.skimboss, Class.palisade, Class.summoner, Class.elite_destroyer, Class.elite_gunner, Class.elite_sprayer];                    
+                     let newClass = arrayOfClasses[Math.floor(Math.random() * arrayOfClasses.length)];
+                   if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                        player.body.define(newClass);
+                    } }
+                } break;
+                     case '1': { // God Mode Cheat
+                    if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
+                    // cheatingbois
+                       
+                    if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                        player.body.passive = true;
+                      player.body.sendMessage('GODMODE: ON.');
                     } }
                 } break;
                 default: socket.kick('Bad packet index.');
@@ -3293,7 +3852,7 @@ const sockets = (() => {
                     switch (room.gameMode) {
                         case "tdm": {
                             // Count how many others there are
-                            let census = [1, 1, 1, 1], scoreCensus = [1, 1, 1, 1];
+                            let census = [1, 1], scoreCensus = [1, 1];
                             players.forEach(p => { 
                                 census[p.team - 1]++; 
                                 if (p.body != null) { scoreCensus[p.team - 1] += p.body.skill.score; }
@@ -3318,7 +3877,9 @@ const sockets = (() => {
                     // Create and bind a body for the player host
                     let body = new Entity(loc);
                         body.protect();
-                        body.define(Class.basic); // Start as a basic tank
+                         let arrayOfClasses = [ Class.basic, Class.basic, Class.basic, Class.basic, Class.mothership, ];                    
+                     let newClass = arrayOfClasses[Math.floor(Math.random() * arrayOfClasses.length)];
+                    body.define(Class.basic); // Start as a basic tank
                         body.name = name; // Define the name
                         // Dev hax
                         if (socket.key === 'testl' || socket.key === 'testk') {
@@ -3333,7 +3894,7 @@ const sockets = (() => {
                     switch (room.gameMode) {
                         case "tdm": {
                             body.team = -player.team;
-                            body.color = [10, 11, 12, 15][player.team - 1];
+                            body.color = [10, 11][player.team - 1];
                         } break;
                         default: {
                             body.color = (c.RANDOM_COLORS) ? 
@@ -3893,6 +4454,7 @@ const sockets = (() => {
                   for (let my of entities)
                     if ((my.type === 'wall' && my.alpha > 0.2) ||
                          my.type === 'miniboss' ||
+                         my.type === 'mothership' ||
                         (my.type === 'tank' && my.lifetime))
                       all.push({
                         id: my.id,
@@ -4031,6 +4593,10 @@ const sockets = (() => {
                     needsFullMap: true,
                     needsNewBroadcast: true, 
                     lastHeartbeat: util.time(),
+                   // ===============================
+                    // Chat System.
+                    // ===============================
+                    lastChatTime: util.time(),
                 };  
                 // Set up loops
                 socket.loops = (() => {
@@ -4332,6 +4898,58 @@ var gameloop = (() => {
                             n.damageRecieved += damage._me * deathFactor._me;
                         }
                     }
+                   /*************   POISON  ***********/
+                      if (n.poison) {
+                        my.poisoned = true
+                        my.poisonedLevel = n.poisionToApply
+                        my.poisonTime = 20
+                        my.poisonedBy = n.master
+                      }
+                      if (my.poison) {
+                        n.poisoned = true
+                        n.poisonedLevel = my.poisionToApply
+                        n.poisonTime = 20
+                        n.poisonedBy = my.master
+                      }
+                      /*************   ICE  ***********/  
+                      if (n.ice) {
+                        my.iceed = true
+                        my.iceedLevel = n.iceToApply
+                        my.iceTime = 17
+                        my.iceedBy = n.master
+                      }
+                      if (my.ice) {
+                        n.iceed = true
+                        n.iceedLevel = my.iceToApply
+                        n.iceTime = 17
+                        n.iceedBy = my.master
+                      }    
+                    /*************   BURN  ***********/
+                      if (n.burn) {
+                        my.burned = true
+                        my.burnedLevel = n.burnToApply
+                        my.burnTime = 10
+                        my.burnedBy = n.master
+                      }
+                      if (my.burn) {
+                        n.burned = true
+                        n.burnedLevel = my.burnToApply
+                        n.burnTime = 10
+                        n.burnedBy = my.master
+                      }
+                      /*************   SHOCK  ***********/ 
+                     if (n.shock) {
+                        my.shocked = true
+                        my.shockedLevel = n.shockToApply
+                        my.shockTime = 10
+                        my.shockedBy = n.master
+                      }
+                       if (my.shock) {
+                        n.shocked = true
+                        n.shockedLevel = my.shockToApply
+                        n.shockTime = 10
+                        n.shockedBy = my.master
+                      } 
                     /************* DO MOTION ***********/    
                     if (nIsFirmCollide < 0) {
                         nIsFirmCollide *= -0.5;
@@ -4502,6 +5120,989 @@ var gameloop = (() => {
     //roomSpeed = c.gameSpeed * alphaFactor;
     //setTimeout(moveloop, 1000 / roomSpeed / 30 - delta); 
 })();
+var iceLoop = (() => {
+    // Fun stuff, like RAINBOWS :D
+    function ice(my) {
+      entities.forEach(function(element) {
+        if (element.showice) {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+        }
+        if (element.iceed && element.type == 'tank') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+                 }
+            element.iceTime -= 1
+            if (element.iceTime <= 0) element.iceed = false
+           
+            if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+              element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+              element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+            }
+          }
+           
+        if (element.iceed && element.type == 'miniboss') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+                 }
+            element.iceTime -= 1
+            if (element.iceTime <= 0) element.iceed = false
+           
+            if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+              element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+              element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+            }
+          }
+        if (element.iceed && element.type == 'mothership') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+                 }
+            element.iceTime -= 1
+            if (element.iceTime <= 0) element.iceed = false
+           
+            if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+              element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+              element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+            }
+          }
+        if (element.iceed && element.type == 'food') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+                 }
+            element.iceTime -= 1
+            if (element.iceTime <= 0) element.iceed = false
+           
+            if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+              element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+              element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+            }
+          }
+        if (element.iceed && element.type == 'crasher') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+                 }
+            element.iceTime -= 1
+            if (element.iceTime <= 0) element.iceed = false
+           
+            if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+              element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+              element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+            }
+          }
+        if (element.iceed && element.type == 'bullet') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['iceEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+                 }
+            element.iceTime -= 1
+            if (element.iceTime <= 0) element.iceed = false
+           
+            if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+              element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+              element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+            }
+          }
+      }
+    )}
+    return () => {
+        //run the ice
+        ice()
+    };
+})(); 
+var poisonLoop = (() => {
+    // Fun stuff, like RAINBOWS :D
+    function poison(my) {
+      entities.forEach(function(element) {
+        if (element.showpoison) {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+        }
+        if (element.poisoned && element.type == 'tank') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+           
+            if (!element.invuln) {
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+            }
+          if (!element.passive) {
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+            }
+           
+            element.poisonTime -= 1
+            if (element.poisonTime <= 0) element.poisoned = false
+           
+            if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
+              element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
+              element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
+              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+            }
+          }
+         if (element.poisoned && element.type == 'food') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+           
+            if (!element.invuln) {
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+            }
+           
+            element.poisonTime -= 1
+            if (element.poisonTime <= 0) element.poisoned = false
+           
+            if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
+              element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
+              element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
+              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+            }
+          }
+         if (element.poisoned && element.type == 'miniboss') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+           
+            if (!element.invuln) {
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+            }
+           
+            element.poisonTime -= 1
+            if (element.poisonTime <= 0) element.poisoned = false
+           
+            if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
+              element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
+              element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
+              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+            }
+          }
+         if (element.poisoned && element.type == 'mothership') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+           
+            if (!element.invuln) {
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+            }
+           
+            element.poisonTime -= 1
+            if (element.poisonTime <= 0) element.poisoned = false
+           
+            if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
+              element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
+              element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
+              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+            }
+          }
+        if (element.poisoned && element.type == 'crasher') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+           
+            if (!element.invuln) {
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+            }
+           
+            element.poisonTime -= 1
+            if (element.poisonTime <= 0) element.poisoned = false
+           
+            if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
+              element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
+              element.poisonedBy.sendMessage('You killed ' + element.name + "'s'" + element.label + ' with poison.');
+              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+            }
+          }
+          if (element.poisoned && element.type == 'bullet') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['poisonEffect'])
+          }
+      }
+    )}
+    return () => {
+        // run the poison
+        poison()
+    };
+})();
+var shockLoop = (() => {
+    // Fun stuff, like RAINBOWS :D
+    function shock(my) {
+      entities.forEach(function(element) {
+        if (element.showshock) {
+          let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+        }
+        if (element.shocked && element.type == 'tank') {
+          let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+          
+             
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+                 }
+            element.shockTime -= 1
+            if (element.shockTime <= 0) element.shocked = false
+           
+            if (element.health.amount <= 0 && element.shockedBy != undefined && element.shockedBy.skill != undefined) {
+              element.shockedBy.skill.score += Math.ceil(util.getJackpot(element.shockedBy.skill.score));
+              element.shockedBy.sendMessage('You killed ' + element.name + ' with Electricity.');
+              element.sendMessage('You have been killed by ' + element.shockedBy.name + ' with Electricity.')
+            }
+          }
+         if (element.shocked && element.type == 'bullet') {
+           let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+          
+             if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+                 }
+           
+            element.shockTime -= 1
+            if (element.shockTime <= 0) element.shocked = false
+           
+            if (element.health.amount <= 0 && element.shockedBy != undefined && element.shockedBy.skill != undefined) {
+              element.shockedBy.skill.score += Math.ceil(util.getJackpot(element.shockedBy.skill.score));
+              element.shockedBy.sendMessage('You killed ' + element.name + ' with Electricity.');
+              element.sendMessage('You have been killed by ' + element.shockedBy.name + ' with Electricity.')
+            }
+          }
+         if (element.shocked && element.type == 'food') {
+           let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+          
+            if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+                 }
+           
+            element.shockTime -= 1
+            if (element.shockTime <= 0) element.shocked = false
+           
+            if (element.health.amount <= 0 && element.shockedBy != undefined && element.shockedBy.skill != undefined) {
+              element.shockedBy.skill.score += Math.ceil(util.getJackpot(element.shockedBy.skill.score));
+              element.shockedBy.sendMessage('You killed ' + element.name + ' with Electricity.');
+              element.sendMessage('You have been killed by ' + element.shockedBy.name + ' with Electricity.')
+            }
+          }
+         if (element.shocked && element.type == 'crasher') {
+           let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+          
+              if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+                 }
+           
+            element.shockTime -= 1
+            if (element.shockTime <= 0) element.shocked = false
+           
+            if (element.health.amount <= 0 && element.shockedBy != undefined && element.shockedBy.skill != undefined) {
+              element.shockedBy.skill.score += Math.ceil(util.getJackpot(element.shockedBy.skill.score));
+              element.shockedBy.sendMessage('You killed ' + element.name + ' with Electricity.');
+              element.sendMessage('You have been killed by ' + element.shockedBy.name + ' with Electricity.')
+            }
+          }
+         if (element.shocked && element.type == 'miniboss') {
+           let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+          
+              if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+                 }
+           
+            element.shockTime -= 1
+            if (element.shockTime <= 0) element.shocked = false
+           
+            if (element.health.amount <= 0 && element.shockedBy != undefined && element.shockedBy.skill != undefined) {
+              element.shockedBy.skill.score += Math.ceil(util.getJackpot(element.shockedBy.skill.score));
+              element.shockedBy.sendMessage('You killed ' + element.name + ' with Electricity.');
+              element.sendMessage('You have been killed by ' + element.shockedBy.name + ' with Electricity.')
+            }
+          }
+         if (element.shocked && element.type == 'mothership') {
+           let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['shockEffect'])
+          
+              if (!element.invuln) {
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+                 }
+           
+            element.shockTime -= 1
+            if (element.shockTime <= 0) element.shocked = false
+           
+            if (element.health.amount <= 0 && element.shockedBy != undefined && element.shockedBy.skill != undefined) {
+              element.shockedBy.skill.score += Math.ceil(util.getJackpot(element.shockedBy.skill.score));
+              element.shockedBy.sendMessage('You killed ' + element.name + ' with Electricity.');
+              element.sendMessage('You have been killed by ' + element.shockedBy.name + ' with Electricity.')
+            }
+          }
+      }
+    )}
+    return () => {
+        // run the electricity
+        shock()
+    };
+})();
+var burnLoop = (() => {
+    // Fun stuff, like RAINBOWS :D
+    function burn(my) {
+      entities.forEach(function(element) {
+        if (element.showburn) {
+          let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+        }
+        if (element.burned && element.type == 'tank') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+          
+              if (!element.invuln) {
+              element.health.amount -= element.health.max / (100 - element.burnLevel)
+              element.shield.amount -= element.shield.max / (85 - element.burnLevel)
+            }
+          
+            element.burnTime -= 1
+            if (element.burnTime <= 0) element.burned = false
+           
+            if (element.health.amount <= 0 && element.burnedBy != undefined && element.burnedBy.skill != undefined) {
+              element.burnedBy.skill.score += Math.ceil(util.getJackpot(element.burnedBy.skill.score));
+              element.burnedBy.sendMessage('You killed ' + element.name + ' with Fire.');
+              element.sendMessage('You have been killed by ' + element.burnedBy.name + ' with Fire.')
+            }
+          }
+         
+        if (element.burned && element.type == 'bullet') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+          
+              if (!element.invuln) {
+              element.health.amount -= element.health.max / (100 - element.burnLevel)
+              element.shield.amount -= element.shield.max / (85 - element.burnLevel)
+            }
+          
+            element.burnTime -= 1
+            if (element.burnTime <= 0) element.burned = false
+           
+            if (element.health.amount <= 0 && element.burnedBy != undefined && element.burnedBy.skill != undefined) {
+              element.burnedBy.skill.score += Math.ceil(util.getJackpot(element.burnedBy.skill.score));
+              element.burnedBy.sendMessage('You killed ' + element.name + ' with Fire.');
+              element.sendMessage('You have been killed by ' + element.burnedBy.name + ' with Fire.')
+            }
+          }
+          if (element.burned && element.type == 'crasher') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+          
+              if (!element.invuln) {
+              element.health.amount -= element.health.max / (100 - element.burnLevel)
+              element.shield.amount -= element.shield.max / (85 - element.burnLevel)
+            }
+          
+            element.burnTime -= 1
+            if (element.burnTime <= 0) element.burned = false
+           
+            if (element.health.amount <= 0 && element.burnedBy != undefined && element.burnedBy.skill != undefined) {
+              element.burnedBy.skill.score += Math.ceil(util.getJackpot(element.burnedBy.skill.score));
+              element.burnedBy.sendMessage('You killed ' + element.name + ' with Fire.');
+              element.sendMessage('You have been killed by ' + element.burnedBy.name + ' with Fire.')
+            }
+          }
+          if (element.burned && element.type == 'miniboss') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+          
+              if (!element.invuln) {
+              element.health.amount -= element.health.max / (100 - element.burnLevel)
+              element.shield.amount -= element.shield.max / (85 - element.burnLevel)
+            }
+          
+            element.burnTime -= 1
+            if (element.burnTime <= 0) element.burned = false
+           
+            if (element.health.amount <= 0 && element.burnedBy != undefined && element.burnedBy.skill != undefined) {
+              element.burnedBy.skill.score += Math.ceil(util.getJackpot(element.burnedBy.skill.score));
+              element.burnedBy.sendMessage('You killed ' + element.name + ' with Fire.');
+              element.sendMessage('You have been killed by ' + element.burnedBy.name + ' with Fire.')
+            }
+          }
+        if (element.burned && element.type == 'mothership') {
+             let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+          
+              if (!element.invuln) {
+              element.health.amount -= element.health.max / (100 - element.burnLevel)
+              element.shield.amount -= element.shield.max / (85 - element.burnLevel)
+            }
+          
+            element.burnTime -= 1
+            if (element.burnTime <= 0) element.burned = false
+           
+            if (element.health.amount <= 0 && element.burnedBy != undefined && element.burnedBy.skill != undefined) {
+              element.burnedBy.skill.score += Math.ceil(util.getJackpot(element.burnedBy.skill.score));
+              element.burnedBy.sendMessage('You killed ' + element.name + ' with Fire.');
+              element.sendMessage('You have been killed by ' + element.burnedBy.name + ' with Fire.')
+            }
+          }
+          if (element.burned && element.type == 'food') {
+            let x = element.size + 10
+            let y = element.size + 10
+            Math.random() < 0.5 ? x *= -1 : x
+            Math.random() < 0.5 ? y *= -1 : y
+            Math.random() < 0.5 ? x *= Math.random() + 1 : x
+            Math.random() < 0.5 ? y *= Math.random() + 1 : y
+            var o = new Entity({
+            x: element.x + x,
+            y: element.y + y
+            })
+            o.define(Class['burnEffect'])
+          
+              if (!element.invuln) {
+              element.health.amount -= element.health.max / (100 - element.burnLevel)
+              element.shield.amount -= element.shield.max / (85 - element.burnLevel)
+            }
+          
+            element.burnTime -= 1
+            if (element.burnTime <= 0) element.burned = false
+           
+            if (element.health.amount <= 0 && element.burnedBy != undefined && element.burnedBy.skill != undefined) {
+              element.burnedBy.skill.score += Math.ceil(util.getJackpot(element.burnedBy.skill.score));
+              element.burnedBy.sendMessage('You killed ' + element.name + ' with Fire.');
+              element.sendMessage('You have been killed by ' + element.burnedBy.name + ' with Fire.')
+            }
+          }
+      }
+    )}
+    return () => {
+        // run the fire
+        burn()
+    };
+})();
+
+
+const MazeGenerator = class {
+  constructor(tdm = false) { // TODO new config format
+    this.tdm = tdm
+    this.init()
+  }
+  init() {
+    let mapString = this.tdm ? `
+      --------------------------------
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@----@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@----@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@----@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@----@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@----@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@----@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@----@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@----@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      --------------------------------
+    ` : `
+      --------------------------------
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@--------@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      -@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-
+      --------------------------------
+    `
+    this.maze = mapString.trim().split('\n').map(r => r.trim().split('').map(r => r === '@'))
+  }
+  clear() {
+    this.maze = Array(32).fill().map(() => Array(32).fill(false))
+  }
+  isClosed() {
+    let cells = [].concat(...
+      this.maze.map((r, x) =>
+        r.map((r, y) => [x, y, r])
+         .filter(([x, y, r]) => !r))
+    ).map(([x, y]) => [x, y, x === 0 || x === 31 || y === 0 || y === 31])
+
+    let work = true
+    while (work) {
+      work = false
+      for (let [x, y, open] of cells)
+        if (open)
+          for (let other of cells) {
+            let [ox, oy, oOpen] = other
+            if (!oOpen && (Math.abs(ox - x) + Math.abs(oy - y) === 1)) {
+              other[2] = true
+              work = true
+            }
+          }
+    }
+    return cells.some(r => !r[2])
+  }
+  randomErosion(side = null, corner = null) { // null = no requirement, 0 = neither, 1 = only one, 2 = both, true = one or two
+    for (let i = 0; i < 2000; i++) {
+      // find position
+      let x = Math.floor(Math.random() * 32)
+      let y = Math.floor(Math.random() * 32)
+      if (this.maze[x][y]) continue
+      // find direction
+      if ((x === 0 || x === 31) && (y === 0 || y === 31)) continue
+      let direction = Math.floor(Math.random() * 4)
+      if (x === 0) direction = 0
+      else if (y === 0) direction = 1
+      else if (x === 31) direction = 2
+      else if (y === 31) direction = 3
+      // find target
+      let tx = direction === 0 ? x + 1 : direction === 2 ? x - 1 : x
+      let ty = direction === 1 ? y + 1 : direction === 3 ? y - 1 : y
+      if (!this.maze[tx][ty]) continue
+      // check corner
+      if (corner !== null) {
+        let left = this.maze
+          [direction === 2 || direction === 3 ? x - 1 : x + 1]
+          [direction === 0 || direction === 3 ? y - 1 : y + 1]
+        let right = this.maze
+          [direction === 1 || direction === 2 ? x - 1 : x + 1]
+          [direction === 2 || direction === 3 ? y - 1 : y + 1]
+        if ((corner === true && (left || right)) || (corner === +left + +right)) {
+        } else {
+          continue
+        }
+      }
+      // check side
+      if (side !== null) {
+        let left = this.maze
+          [direction === 3 ? x + 1 : direction === 1 ? x - 1 : x]
+          [direction === 0 ? y + 1 : direction === 2 ? y - 1 : y]
+        let right = this.maze
+          [direction === 1 ? x + 1 : direction === 3 ? x - 1 : x]
+          [direction === 2 ? y + 1 : direction === 0 ? y - 1 : y]
+        if ((side === true && (left || right)) || (side === +left + +right)) {
+        } else {
+          continue
+        }
+      }
+      // return it
+      return [tx, ty, x, y]
+    }
+    throw new Error('Unable to find suitable erosion site!')
+  }
+  erode(side, corner) {
+    let [x, y] = this.randomErosion(side, corner)
+    this.maze[x][y] = false
+  }
+  erodeSym2(side, corner) {
+    let [x, y] = this.randomErosion(side, corner)
+    this.maze[x][y] = false
+    this.maze[31 - x][31 - y] = false
+  }
+  run() {
+    for (let i = 0; i < 20; i++)
+      this.erode(0, 2)
+    for (let i = 0; i < 10; i++) {
+      this.erode(0, 2)
+      this.erode(2, 2)
+      this.erode(2, 2)
+      this.erode(2, 2)
+    }
+    for (let i = 0; i < 20; i++) {
+      this.erode(1, 2)
+      this.erode(0, 2)
+      this.erode(2, 2)
+      this.erode(2, 2)
+      this.erode(2, 2)
+    }
+    for (let i = 0; i < 150; i++)
+      this.erode(1, 2)
+    for (let i = 0; i < 10; i++) {
+      this.erode(0, 2)
+      this.erode(2, 2)
+      this.erode(2, 2)
+      this.erode(2, 2)
+    }
+    for (let i = 0; i < 50; i++)
+      this.erode(0, 0)
+    return this
+  }
+  runSym2() {
+    for (let i = 0; i < 10; i++)
+      this.erodeSym2(0, 2)
+    for (let i = 0; i < 5; i++) {
+      this.erodeSym2(0, 2)
+      this.erodeSym2(2, 2)
+      this.erodeSym2(2, 2)
+      this.erodeSym2(2, 2)
+    }
+    for (let i = 0; i < 10; i++) {
+      this.erodeSym2(1, 2)
+      this.erodeSym2(0, 2)
+      this.erodeSym2(2, 2)
+      this.erodeSym2(2, 2)
+      this.erodeSym2(2, 2)
+    }
+    for (let i = 0; i < 75; i++)
+      this.erodeSym2(1, 2)
+    for (let i = 0; i < 5; i++) {
+      this.erodeSym2(0, 2)
+      this.erodeSym2(2, 2)
+      this.erodeSym2(2, 2)
+      this.erodeSym2(2, 2)
+    }
+    for (let i = 0; i < 25; i++)
+      this.erodeSym2(0, 0)
+    return this
+  }
+  start() {
+    if (this.tdm) {
+      for (let i = 0; i < 500; i++)
+        try {
+          this.runSym2()
+          if (!this.isClosed())
+            return this
+        } catch(e) {}
+    } else {
+      for (let i = 0; i < 500; i++)
+        try {
+          return this.run()
+          if (!this.isClosed())
+            return this
+        } catch(e) {}
+    }
+    this.clear()
+    return this
+  }
+  place() {
+    let scale = room.width / 32
+    for (let x = 0; x < 32; x++)
+      for (let y = 0; y < 32; y++)
+        if (this.maze[x][y]) {
+          let o = new Entity({ x: (x + 0.5) * scale, y: (y + 0.5) * scale })
+          o.define(Class.mazewall)
+          o.SIZE = 0.5 * scale
+          o.team = -101
+          o.protect()
+          o.life()
+        }
+  }
+}
+
+
+
+
+
 // A less important loop. Runs at an actual 5Hz regardless of game speed.
 var maintainloop = (() => {
     // Place obstacles
@@ -4524,13 +6125,79 @@ var maintainloop = (() => {
         let roidcount = room.roid.length * room.width * room.height / room.xgrid / room.ygrid / 50000 / 1.5;
         let rockcount = room.rock.length * room.width * room.height / room.xgrid / room.ygrid / 250000 / 1.5;
         let count = 0;
-        for (let i=Math.ceil(roidcount); i; i--) { count++; placeRoid('roid', Class.obstacle); }
+      /*  for (let i=Math.ceil(roidcount); i; i--) { count++; placeRoid('roid', Class.obstacle); }
         for (let i=Math.ceil(roidcount * 0.3); i; i--) { count++; placeRoid('roid', Class.babyObstacle); }
         for (let i=Math.ceil(rockcount * 0.8); i; i--) { count++; placeRoid('rock', Class.obstacle); }
         for (let i=Math.ceil(rockcount * 0.5); i; i--) { count++; placeRoid('rock', Class.babyObstacle); }
+      for (let i=Math.ceil(rockcount * 0.8); i; i--) { count++; placeRoid('wal2', Class.obstacle); }
+        for (let i=Math.ceil(rockcount * 0.5); i; i--) { count++; placeRoid('wal2', Class.babyObstacle); }*/
         util.log('Placing ' + count + ' obstacles!');
     }
+   let createDom = (loc, mode, type) => {
+      let o = new Entity(loc)
+      o.define(type)
+      o.team = mode || -100
+      o.color = [3, 10, 11, 12, 15][-mode] 
+    }
+   let createMaze = (loc, mode, type) => {
+      let o = new Entity(loc)
+      o.define(type)
+      o.team = mode || -100
+      o.color = [16][-mode]
+        }
+         let createAutoMaze = (loc, mode, type) => {
+      let o = new Entity(loc)
+      o.define(type)
+      o.team = mode || -100
+      o.color = [16][-mode]
+        }
+          if (room.gameMode === 'tdm') room['bot1'].forEach((loc) => { createDom(loc, -0, ran.choose([ Class.gunnerDominator, Class.destroyerDominator, Class.trapDominatork])); }); 
+      //   if  (room.gameMode === 'tdm')  room['wal2'].forEach((loc) => { createMaze(loc, -0, ran.choose([ Class.mazewall, Class.mazewall, Class.mazewall])); });
+        if  (room.gameMode === 'tdm')  room['wal3'].forEach((loc) => { createAutoMaze(loc, -0, ran.choose([ Class.automaze, Class.automaze, Class.automaze])); });
+        if  (room.gameMode === 'ffa')  room['wal2'].forEach((loc) => { createMaze(loc, -0, ran.choose([ Class.mazewall, Class.mazewall, Class.mazewall])); });
+        if  (room.gameMode === 'ffa')  room['wal3'].forEach((loc) => { createAutoMaze(loc, -0, ran.choose([ Class.automaze, Class.automaze, Class.automaze])); });
+   
     placeRoids();
+     if (c.SPAWN_MAZE_WALLS) new MazeGenerator(c.SPAWN_MAZE_WALLS === 2).start().place()
+    for (let loc of room['door']) {
+      let d = new Entity(loc)
+      d.define(Class.mazewall)
+      d.SIZE = (room.xgridWidth + room.ygridHeight) / 4
+      d.team = -101
+      d.intangibility = true
+      d.alpha = 0.2
+      d.protect()
+      d.life()
+      let buttons = []
+      let makeButtons = open => {
+        for (let loc of room['ctrl']) {
+          let o = new Entity(loc)
+          o.define(Class.dominator)
+          o.pushability = o.PUSHABILITY = 0
+          o.team = -101
+          o.color = open ? 12 : 11 // <- green, red -> 12
+          o.ondead = () => {
+            if (open) {
+              d.intangibility = true
+              d.alpha = 0.2
+            } else {
+              d.intangibility = false
+              d.alpha = 1
+            }
+            for (let b of buttons)
+              if (b != o) {
+                b.ondead = null
+                b.destroy()
+              }
+            buttons = []
+            makeButtons(!open)
+          }
+          buttons.push(o)
+        }
+      }
+      makeButtons(false)
+    }
+
     // Spawning functions
     let spawnBosses = (() => {
         let timer = 0;
@@ -4583,9 +6250,9 @@ var maintainloop = (() => {
         return census => {
             if (timer > 60 && ran.dice(60 - timer)) {
                 util.log('[SPAWN] Preparing to spawn...');
-                timer = 0;
+                timer = -1500;
                 let choice = [];
-                switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)) {
+                switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)) {
                     case 0: 
                         choice = [[Class.elite_destroyer], 2, 'a', 'nest'];
                         break;
@@ -4617,7 +6284,7 @@ var maintainloop = (() => {
                         sockets.broadcast('Never has the phrase "Square Up" been more acurate...');
                         break;
                      case 8: 
-                        choice = [[Class.skimboss, Class.summoner, Class.summonermk2, Class.palisade, Class.elite_destroyer, Class.elite_gunner, Class.elite_sprayer, Class.elite_trapper], 3, 'a', 'norm']; 
+                        choice = [[Class.skimboss, Class.summoner, Class.summonermk2, Class.palisade, Class.elite_destroyer, Class.elite_gunner, Class.elite_sprayer, Class.elite_trapper, Class.trapefighter], 3, 'a', 'norm']; 
                         sockets.broadcast('Some bosses are on their ways...');
                         break;
                     case 9: 
@@ -4625,7 +6292,37 @@ var maintainloop = (() => {
                         sockets.broadcast('All hail LORD SASSAFRAS!!!');
                         sockets.broadcast('PS. I like crackers...')
                         break;
+                      case 10: 
+                        choice = [[Class.aquamarine,], 3, 'a', 'nest']; 
+                        sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                    case 11: 
+                        choice = [[Class.bow,], 3, 'a', 'norm']; 
+                      // sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                     case 12: 
+                        choice = [[Class.bow, Class.aquamarine, Class.visultima, Class.trapefighter, Class.arrasian], 3, 'a', 'norm']; 
+                      // sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                     case 13: 
+                        choice = [[Class.bowCore, Class.bowShard], 3, 'a', 'norm']; 
+                      // sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                     case 14: 
+                        choice = [[Class.blitzkrieg, Class.sheathBoss], 2, 'castle', 'norm']; 
+                      // sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                    case 15: 
+                        choice = [[Class.elite_bombadier, Class.elite_trapper], 2, 'a', 'norm']; 
+                      // sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                    case 16: 
+                        choice = [[Class.xyv,Class.gunshipminiboss], 3, 'castle', 'nest']; 
+                      // sockets.broadcast("Here comes 'waterboy'!");
+                        break;
+                    
                 }
+             
                 boss.prepareToSpawn(...choice);
                 setTimeout(boss.spawn, 3000);
                 // Set the timeout for the spawn functions
@@ -4633,33 +6330,56 @@ var maintainloop = (() => {
         };
     })();
     let spawnCrasher = census => {
-        if (ran.chance(1 -  0.5 * census.crasher / room.maxFood / room.nestFoodAmount)) {
+        if (ran.chance(3 -  0.5 * census.crasher / room.maxFood / room.nestFoodAmount)) {
             let spot, i = 30;
             do { spot = room.randomType('nest'); i--; if (!i) return 0; } while (dirtyCheck(spot, 100));
-            let type = (ran.dice(80)) ? ran.choose([Class.sentryGun, Class.sentrySwarm, Class.sentryTrap]) : Class.crasher;
+            let type = (ran.dice(3)) ? ran.choose([Class.sentryGun, Class.sentrySwarm, Class.sentryTrap, Class.semicrusher, Class.arrowCrasher, Class.crusher, Class.visDestructia, Class.destroyerCrasher, Class.triblade, Class.flashCrasher, Class.grouper, Class.megaCrasher, Class.swimmer, Class.visLITE,  Class.dreadnoughtLITE, Class.colliderLITE, Class.gunshipLITE, Class.detraLITE]) : Class.crasher;
             let o = new Entity(spot);
                 o.define(type);
                 o.team = -100;
         }
     };
+   let teamWon = team => {
+      setTimeout(() => sockets.broadcast(team + ' HAS WON THE GAME!'), 1e3)
+      setTimeout(() => closemode(), 5e3)
+    }
+
+    let createMom = (loc, team) => {
+      let o = new Entity(loc)
+      o.define(Class.modemothership)
+      o.team = -team
+      o.color = [10, 11, 12, 15][team-1]
+      o.ondead = () => {
+        teamWon(['GREEN', 'BLUE'][team-1])
+      }
+      //room.lifetime.push(o)
+    }
+
     // The NPC function
     let makenpcs = (() => {
         // Make base protectors if needed.
-            /*let f = (loc, team) => { 
+            let f = (loc, team) => { 
                 let o = new Entity(loc);
                     o.define(Class.baseProtector);
                     o.team = -team;
                     o.color = [10, 11, 12, 15][team-1];
             };
             for (let i=1; i<5; i++) {
-                room['bas' + i].forEach((loc) => { f(loc, i); }); 
-            }*/
+                room['bap' + i].forEach((loc) => { f(loc, i); }); 
+            }
+         for (let i=1; i<5; i++) {
+                room['bad' + i].forEach((loc) => { createMom(loc, i); }); 
+            }
+
         // Return the spawning function
         let bots = [];
+      let Bbots = [];
+      let Gbots = [];
         return () => {
             let census = {
                 crasher: 0,
                 miniboss: 0,
+               mothership: 0,
                 tank: 0,
             };    
             let npcs = entities.map(function npcCensus(instance) {
@@ -4671,15 +6391,17 @@ var maintainloop = (() => {
             // Spawning
             spawnCrasher(census);
             spawnBosses(census);
-            /*/ Bots
-                if (bots.length < c.BOTS) {
+          if (bots.length < c.BOTS) {
                     let o = new Entity(room.random());
-                    o.color = 17;
+                    o.color = 12;
                     o.define(Class.bot);
-                    o.define(Class.basic);
+                     let arrayOfClasses = [Class.giffard, Class.basic, Class.twin, Class.machine, Class.overlord, Class.necromancer, Class.musket, Class.lilfactauto, Class.spray, Class.overdrive, Class.vulcan, Class.fighter, Class.construct]             
+                     let newClass = arrayOfClasses[Math.floor(Math.random() * arrayOfClasses.length)];
+                    o.define(newClass);
                     o.name += ran.chooseBotName();
                     o.refreshBodyAttributes();
-                    o.color = 17;
+                    o.color = 12;
+                  o.skilllevel = 45;
                     bots.push(o);
                 }
                 // Remove dead ones
@@ -4691,7 +6413,53 @@ var maintainloop = (() => {
                         o.skill.maintain();
                     }
                 });
-            */
+          if (Bbots.length < c.BBOTS) {
+                    let o = new Entity(room.random());
+                    o.color = 10;
+                    o.define(Class.bot);
+                     let arrayOfClasses = [Class.giffard, Class.basic, Class.twin, Class.machine, Class.overlord, Class.necromancer, Class.musket, Class.lilfactauto, Class.spray, Class.overdrive, Class.vulcan, Class.fighter, Class.construct]             
+                     let newClass = arrayOfClasses[Math.floor(Math.random() * arrayOfClasses.length)];
+                    o.define(newClass);
+                    o.name += ran.chooseBotName();
+                    o.refreshBodyAttributes();
+                    o.color = 10;
+                  o.skilllevel = 45;
+            o.team = -1;
+                    Bbots.push(o);
+                }
+                // Remove dead ones
+                Bbots = Bbots.filter(e => { return !e.isDead(); });
+                // Slowly upgrade them
+                Bbots.forEach(o => {
+                    if (o.skill.level < 45) {
+                        o.skill.score += 35;
+                        o.skill.maintain();
+                    }
+                });
+          if (Gbots.length < c.GBOTS) {
+                    let o = new Entity(room.random());
+                    o.color = 11;
+                    o.define(Class.bot);
+                     let arrayOfClasses = [Class.giffard, Class.basic, Class.twin, Class.machine, Class.overlord, Class.necromancer, Class.musket, Class.lilfactauto, Class.spray, Class.overdrive, Class.vulcan, Class.fighter, Class.construct]             
+                     let newClass = arrayOfClasses[Math.floor(Math.random() * arrayOfClasses.length)];
+                    o.define(newClass);
+                    o.name += ran.chooseBotName();
+                    o.refreshBodyAttributes();
+                    o.color = 11;
+                  o.skilllevel = 45;
+            o.team = -2;
+                    Gbots.push(o);
+                }
+                // Remove dead ones
+                Gbots = Gbots.filter(e => { return !e.isDead(); });
+                // Slowly upgrade them
+                Gbots.forEach(o => {
+                    if (o.skill.level < 45) {
+                        o.skill.score += 35;
+                        o.skill.maintain();
+                    }
+                });
+            
         };
     })();
     // The big food function
@@ -4921,43 +6689,54 @@ var maintainloop = (() => {
     };
 })();
 // This is the checking loop. Runs at 1Hz.
-var speedcheckloop = (() => {
-    let fails = 0;
-    // Return the function
-    return () => {
-        let activationtime = logs.activation.sum(),
-            collidetime = logs.collide.sum(),
-            movetime = logs.entities.sum(),
-            playertime = logs.network.sum(),
-            maptime = logs.minimap.sum(),
-            physicstime = logs.physics.sum(),
-            lifetime = logs.life.sum(),
-            selfietime = logs.selfie.sum();
-        let sum = logs.master.record();
-        let loops = logs.loops.count(),
-            active = logs.entities.count();
-        global.fps = (1000/sum).toFixed(2);
-        if (sum > 1000 / roomSpeed / 30) { 
-            //fails++;
-            util.warn('~~ LOOPS: ' + loops + '. ENTITY #: ' + entities.length + '//' + Math.round(active/loops) + '. VIEW #: ' + views.length + '. BACKLOGGED :: ' + (sum * roomSpeed * 3).toFixed(3) + '%! ~~');
-            util.warn('Total activation time: ' + activationtime);
-            util.warn('Total collision time: ' + collidetime);
-            util.warn('Total cycle time: ' + movetime);
-            util.warn('Total player update time: ' + playertime);
-            util.warn('Total lb+minimap processing time: ' + maptime);
-            util.warn('Total entity physics calculation time: ' + physicstime);
-            util.warn('Total entity life+thought cycle time: ' + lifetime);
-            util.warn('Total entity selfie-taking time: ' + selfietime);
-            util.warn('Total time: ' + (activationtime + collidetime + movetime + playertime + maptime + physicstime + lifetime + selfietime));
-            if (fails > 60) {
-                util.error("FAILURE!");
-                //process.exit(1);
-            }
-        } else {
-            fails = 0;
-        }
-    };
-})();
+let speedcheckloop = (() => {
+  setTimeout(() => {
+    let start = Date.now()
+    let i = setInterval(() => {
+      let leaderScore = Math.max(...sockets.clients.filter(r => r.player.body).map(r => r.player.body.skill.score))
+      let overAgeHour = (Date.now() - start) / 60e3 / 60
+      if (leaderScore < overAgeHour * 20000) {
+        closemode()
+        clearInterval(i)
+      }
+    }, 60e3)
+  }, 60e3 * 60 * 5)
+  let fails = 0
+  // Return the function
+  return () => {
+    let activationtime = logs.activation.sum(),
+        collidetime = logs.collide.sum(),
+        movetime = logs.entities.sum(),
+        playertime = logs.network.sum(),
+        maptime = logs.minimap.sum(),
+        physicstime = logs.physics.sum(),
+        lifetime = logs.life.sum(),
+        selfietime = logs.selfie.sum()
+    let sum = logs.master.record()
+    let loops = logs.loops.count(),
+        active = logs.entities.count()
+    fps = Math.min(1, 1000 / 30 / sum / roomSpeed)
+    fails = Math.max(0, fails - fps + 0.9)
+    if (fps !== 1) {
+      util.warn('~~ LOOPS: ' + loops + '. ENTITY #: ' + entities.length + '//' + Math.round(active/loops) + '. VIEW #: ' + views.length + '. BACKLOGGED :: ' + (sum * roomSpeed * 3).toFixed(3) + '%! ~~')
+      util.warn('Total activation time: ' + activationtime)
+      util.warn('Total collision time: ' + collidetime)
+      util.warn('Total cycle time: ' + movetime)
+      util.warn('Total player update time: ' + playertime)
+      util.warn('Total lb+minimap processing time: ' + maptime)
+      util.warn('Total entity physics calculation time: ' + physicstime)
+      util.warn('Total entity life+thought cycle time: ' + lifetime)
+      util.warn('Total entity selfie-taking time: ' + selfietime)
+      util.warn('Total time: ' + (activationtime + collidetime + movetime + playertime + maptime + physicstime + lifetime + selfietime))
+    }
+    if (fails > 10) {
+      util.error("FAILURE!")
+      sockets.broadcast('Server overloaded! Restarting...')
+      fs.writeFileSync(`/tmp/save.${ c.NAME }.json`, JSON.stringify(sockets.clients.filter(r => r.player.body && r.player.body.skill.score > 50000).map(r => ({ ip: r.ip[0], score: r.player.body.skill.score }))))
+      setTimeout(() => process.exit(1), 2000)
+    }
+  }
+})()
 
 /** BUILD THE SERVERS **/  
 // Turn the server on
@@ -4966,7 +6745,7 @@ let server = http.createServer((req, res) => {
   switch (pathname) {
     case '/':
       res.writeHead(200)
-      res.end('<!DOCTYPE html><h3>Arraz</h3>')
+      res.end('<!DOCTYPE html><h3>Arras</h3>')
     break
     case '/mockups.json':
       res.setHeader('Access-Control-Allow-Origin', '*')
@@ -4996,5 +6775,10 @@ let websockets = (() => {
 
 // Bring it to life
 setInterval(gameloop, room.cycleSpeed);
+setInterval(poisonLoop, room.cycleSpeed * 7);
+//setInterval(powerLoop, room.cycleSpeed * 20);
+setInterval(burnLoop, room.cycleSpeed * 7);
+setInterval(shockLoop, room.cycleSpeed * 7);
+setInterval(iceLoop, room.cycleSpeed * 7);  
 setInterval(maintainloop, 200);
 setInterval(speedcheckloop, 1000);
