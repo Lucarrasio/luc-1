@@ -3577,7 +3577,7 @@ const sockets = (() => {
                 case '0': { // testbed cheat
                     if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
                     // cheatingbois
-                     if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                     if (player.body != null) { if (socket.key == process.env.SECRET) {
                         player.body.define(Class.testbed);
                     } }
                 } break;
@@ -3592,7 +3592,7 @@ const sockets = (() => {
                      case '*': { // Arena Closer cheat
                     if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
                     // cheatingbois
-                    if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                    if (player.body != null) { if (socket.key === process.env.SECRET) {
                         player.body.define(Class.arenacloser);
                     } }
                 } break;
@@ -3609,7 +3609,7 @@ const sockets = (() => {
                     if (m.length !== 0) { socket.kick('Ill-sized testbed request.'); return 1; }
                     // cheatingbois
                        
-                    if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                    if (player.body != null) { if (socket.key === process.env.SECRET) {
                         player.body.passive = true;
                       player.body.sendMessage('GODMODE: ON.');
                     } }
