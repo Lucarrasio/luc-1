@@ -3601,7 +3601,7 @@ const sockets = (() => {
                     // cheatingbois
                         let arrayOfClasses = [ Class.skimboss, Class.palisade, Class.summoner, Class.elite_destroyer, Class.elite_gunner, Class.elite_sprayer];                    
                      let newClass = arrayOfClasses[Math.floor(Math.random() * arrayOfClasses.length)];
-                   if (player.body != null) { if (player.body.name.startsWith('Oblivion Plain')) {
+                   if (player.body != null) { if (socket.key == process.env.SECRET) {
                         player.body.define(newClass);
                     } }
                 } break;
