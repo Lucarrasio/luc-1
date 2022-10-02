@@ -6333,7 +6333,7 @@ var maintainloop = (() => {
         if (ran.chance(3 -  0.5 * census.crasher / room.maxFood / room.nestFoodAmount)) {
             let spot, i = 30;
             do { spot = room.randomType('nest'); i--; if (!i) return 0; } while (dirtyCheck(spot, 100));
-            let type = (ran.dice(3)) ? ran.choose([Class.sentryGun, Class.sentrySwarm, Class.sentryTrap, Class.semicrusher, Class.arrowCrasher, Class.crusher, Class.visDestructia, Class.destroyerCrasher, Class.triblade, Class.flashCrasher, Class.grouper, Class.megaCrasher, Class.swimmer, Class.visLITE,  Class.dreadnoughtLITE, Class.colliderLITE, Class.gunshipLITE, Class.detraLITE]) : Class.crasher;
+            let type = (ran.dice(10000)) ? ran.choose([Class.sentryGun, Class.sentrySwarm, Class.sentryTrap, Class.semicrusher, Class.arrowCrasher, Class.crusher, Class.visDestructia, Class.destroyerCrasher, Class.triblade, Class.flashCrasher, Class.grouper, Class.megaCrasher, Class.swimmer, Class.visLITE,  Class.dreadnoughtLITE, Class.colliderLITE, Class.gunshipLITE, Class.detraLITE]) : Class.crasher;
             let o = new Entity(spot);
                 o.define(type);
                 o.team = -100;
@@ -6469,7 +6469,7 @@ var maintainloop = (() => {
         function getFoodClass(level) {
             let a = { };
             switch (level) {
-                case 0: a = Class.egg; break;
+                case 0: a = Class.hugePentagon; break;
                 case 1: a = Class.square; break;
                 case 2: a = Class.triangle; break;
                 case 3: a = Class.pentagon; break;
