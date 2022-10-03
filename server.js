@@ -1684,7 +1684,7 @@ class Entity {
         this.poison = false
         this.poisonedBy = -1
         // this.poisonLevel = 20
-       this.poisonLevel = 0.9
+       this.poisonLevel = 20
         this.poisonToApply = 0
         this.showpoison = false
         this.poisonTimer = 0
@@ -5420,7 +5420,7 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-              element.health.amount -= element.health.max * (element.poisonLevel)
+               element.health.amount -= element.health.max / (55 - element.poisonLevel)
               // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
           if (!element.passive) {
@@ -5451,7 +5451,7 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-              element.health.amount -= element.health.max + (55 - element.poisonLevel)
+              element.health.amount -= element.health.max / (55 - element.poisonLevel)
               // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
            
@@ -6558,7 +6558,7 @@ var maintainloop = (() => {
             let a = { };
             switch (level) {
                 case 0: a = Class.egg; break;
-                case 1: a = Class.square; break;
+                case 1: a = Class.hugePentagon; break;
                 case 2: a = Class.triangle; break;
                 case 3: a = Class.pentagon; break;
                 case 4: a = Class.bigPentagon; break;
