@@ -754,68 +754,152 @@ class io_hangOutNearMaster extends IO {
         }
     }
 }
-class io_spin extends IO {
-    constructor(b) {
-        super(b);
-        this.a = 0;
-    }
+// class io_spin extends IO {
+//     constructor(b) {
+//         super(b);
+//         this.a = 0;
+//     }
     
-    think(input) {
-        this.a += 0.05;
-        let offset = 0;
-        if (this.body.bond != null) {
-            offset = this.body.bound.angle;
-        }
-        return {                
-            target: {
-                x: Math.cos(this.a + offset),
-                y: Math.sin(this.a + offset),
-            },  
-            main: true,
-        };        
+//     think(input) {
+//         this.a += 0.05;
+//         let offset = 0;
+//         if (this.body.bond != null) {
+//             offset = this.body.bound.angle;
+//         }
+//         return {                
+//             target: {
+//                 x: Math.cos(this.a + offset),
+//                 y: Math.sin(this.a + offset),
+//             },  
+//             main: true,
+//         };        
+//     }
+// }
+// class io_fastspin extends IO {
+//     constructor(b) {
+//         super(b);
+//         this.a = 0;
+//     }
+    
+//     think(input) {
+//         this.a += 0.072;
+//         let offset = 0;
+//         if (this.body.bond != null) {
+//             offset = this.body.bound.angle;
+//         }
+//         return {                
+//             target: {
+//                 x: Math.cos(this.a + offset),
+//                 y: Math.sin(this.a + offset),
+//             },  
+//             main: true,
+//         };        
+//     }
+// }
+// class io_reversespin extends IO {
+//     constructor(b) {
+//         super(b);
+//         this.a = 0;
+//     }
+    
+//     think(input) {
+//         this.a -= 0.05;
+//         let offset = 0;
+//         if (this.body.bond != null) {
+//             offset = this.body.bound.angle;
+//         }
+//         return {                
+//             target: {
+//                 x: Math.cos(this.a + offset),
+//                 y: Math.sin(this.a + offset),
+//             },  
+//             main: true,
+//         };        
+//     }
+// }
+class io_spin extends IO {
+  constructor(b) {
+    super(b);
+    this.a = 0;
+  }
+
+  think(input) {
+    this.a += 0.02 / roomSpeed;
+    let offset = 0;
+    if (this.body.bond != null) {
+      offset = this.body.bound.angle / roomSpeed;
     }
+    return {
+      target: {
+        x: Math.cos(this.a + offset) / roomSpeed,
+        y: Math.sin(this.a + offset) / roomSpeed,
+      },
+      main: true,
+    };
+  }
 }
 class io_fastspin extends IO {
-    constructor(b) {
-        super(b);
-        this.a = 0;
+  constructor(b) {
+    super(b);
+    this.a = 0;
+  }
+
+  think(input) {
+    this.a += 0.05 / roomSpeed;
+    let offset = 0;
+    if (this.body.bond != null) {
+      offset = this.body.bound.angle;
     }
-    
-    think(input) {
-        this.a += 0.072;
-        let offset = 0;
-        if (this.body.bond != null) {
-            offset = this.body.bound.angle;
-        }
-        return {                
-            target: {
-                x: Math.cos(this.a + offset),
-                y: Math.sin(this.a + offset),
-            },  
-            main: true,
-        };        
+    return {
+      target: {
+        x: Math.cos(this.a + offset) / roomSpeed,
+        y: Math.sin(this.a + offset) / roomSpeed,
+      },
+      main: true,
+    };
+  }
+}
+class io_helicopterhelicopter extends IO {
+  constructor(b) {
+    super(b);
+    this.a = 0;
+  }
+
+  think(input) {
+    this.a += 0.1;
+    let offset = 0;
+    if (this.body.bond != null) {
+      offset = this.body.bound.angle;
     }
+    return {
+      target: {
+        x: Math.cos(this.a + offset) / roomSpeed,
+        y: Math.sin(this.a + offset) / roomSpeed,
+      },
+      main: true,
+    };
+  }
 }
 class io_reversespin extends IO {
-    constructor(b) {
-        super(b);
-        this.a = 0;
+  constructor(b) {
+    super(b);
+    this.a = 0;
+  }
+
+  think(input) {
+    this.a -= 0.02 / roomSpeed;
+    let offset = 0;
+    if (this.body.bond != null) {
+      offset = this.body.bound.angle / roomSpeed;
     }
-    
-    think(input) {
-        this.a -= 0.05;
-        let offset = 0;
-        if (this.body.bond != null) {
-            offset = this.body.bound.angle;
-        }
-        return {                
-            target: {
-                x: Math.cos(this.a + offset),
-                y: Math.sin(this.a + offset),
-            },  
-            main: true,
-        };        
-    }
+    return {
+      target: {
+        x: Math.cos(this.a + offset) / roomSpeed,
+        y: Math.sin(this.a + offset) / roomSpeed,
+      },
+      main: true,
+    };
+  }
 }
 class io_dontTurn extends IO {
     constructor(b) {
