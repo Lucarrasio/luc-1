@@ -2595,6 +2595,9 @@ this.guns.color = 19;
         case 'autospin':
             this.facing += 0.02 / roomSpeed;
             break;
+               case 'autogfastspin':
+            this.facing += 0.15 / roomSpeed;
+            break;
         case 'turnWithSpeed':
             this.facing += this.velocity.length / 90 * Math.PI / roomSpeed;
             break;
