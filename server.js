@@ -5450,7 +5450,7 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-              element.health.amount -= element.health.max - (55 - element.poisonLevel)
+              element.health.amount -= element.health.max + (55 - element.poisonLevel)
               // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
            
