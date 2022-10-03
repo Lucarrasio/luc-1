@@ -1683,7 +1683,8 @@ class Entity {
         this.poisoned = false
         this.poison = false
         this.poisonedBy = -1
-        this.poisonLevel = 10
+        // this.poisonLevel = 20
+       this.poisonLevel = 5
         this.poisonToApply = 0
         this.showpoison = false
         this.poisonTimer = 0
