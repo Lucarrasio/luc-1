@@ -1568,11 +1568,42 @@ var bringToLife = (() => {
             my.range -= 1;
         }
         // Invisibility
-        if (my.invisible[1]) {
-          my.alpha = Math.max(0, my.alpha - my.invisible[1])
-          if (!my.velocity.isShorterThan(0.1) || my.damageReceived)
-            my.alpha = Math.min(1, my.alpha + my.invisible[0])
-        }
+//         if (my.invisible[1]) {
+//           my.alpha = Math.max(0, my.alpha - my.invisible[1])
+//           if (!my.velocity.isShorterThan(0.1) || my.damageReceived)
+//             my.alpha = Math.min(1, my.alpha + my.invisible[0])
+//         }
+//         // So we start with my master's thoughts and then we filter them down through our control stack
+//         my.controllers.forEach(AI => {
+//             let a = AI.think(b);
+//             let passValue = passer(a, b, AI.acceptsFromTop);
+//             passValue('target');
+//             passValue('goal');
+//             passValue('fire');
+//             passValue('main');
+//             passValue('alt');
+//             passValue('power');
+//         });        
+//         my.control.target = (b.target == null) ? my.control.target : b.target;
+//         my.control.goal = b.goal;
+//         my.control.fire = b.fire;
+//         my.control.main = b.main;
+//         my.control.alt = b.alt;
+//         my.control.power = (b.power == null) ? 1 : b.power;
+//         // React
+//         my.move(); 
+//         my.face();
+//         // Handle guns and turrets if we've got them
+//         my.guns.forEach(gun => gun.live());
+//         my.turrets.forEach(turret => turret.life());
+//         if (my.skill.maintain()) my.refreshBodyAttributes();
+//     }; 
+// })();
+ if (my.invisible[1]) {
+		  	    my.alpha = Math.max(0.01, my.alpha - my.invisible[1]);
+		  	    if (!(my.velocity.x * my.velocity.x + my.velocity.y * my.velocity.y < 0.15 * 0.15) || my.damageRecieved)
+		  	      	my.alpha = Math.min(1, my.alpha + my.invisible[0]);
+		    } else my.alpha = 1;
         // So we start with my master's thoughts and then we filter them down through our control stack
         my.controllers.forEach(AI => {
             let a = AI.think(b);
