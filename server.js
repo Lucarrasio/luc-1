@@ -5265,8 +5265,8 @@ var iceLoop = (() => {
             o.define(Class['iceEffect'])
           
             if (!element.invuln) {
-              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
-              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
+              element.velocity.x -= element.velocity.x / (0.2 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.2 - element.iceLevel);
                  }
             element.iceTime -= 1
             if (element.iceTime <= 0) element.iceed = false
