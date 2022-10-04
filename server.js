@@ -1684,7 +1684,7 @@ class Entity {
         this.poison = false
         this.poisonedBy = -1
         // this.poisonLevel = 20
-       this.poisonLevel = 13
+       this.poisonLevel = 20
         this.poisonToApply = 0
         this.showpoison = false
         this.poisonTimer = 0
@@ -5421,8 +5421,8 @@ var poisonLoop = (() => {
            
             if (!element.invuln) {
               
-               element.shield.amount -= element.shield.max - 1
-              // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+              
+               element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
           if (!element.passive) {
               // element.health.amount -= element.health.max / (55 - element.poisonLevel)
@@ -5452,8 +5452,8 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-              element.shield.amount -= element.shield.max - 1
-              // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+             
+               element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
            
             element.poisonTime -= 1
@@ -5479,6 +5479,7 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
               // element.health.amount -= element.health.max / (55 - element.poisonLevel)
               // element.shield.amount -= element.shield.max - 1
             }
@@ -5506,9 +5507,9 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-               element.shield.amount -= element.shield.max - 1
+             
               // element.health.amount -= element.health.max / (55 - element.poisonLevel)
-              // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+              element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
            
             element.poisonTime -= 1
@@ -5534,9 +5535,9 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-               element.shield.amount -= element.shield.max - 1
+              
               // element.health.amount -= element.health.max / (55 - element.poisonLevel)
-              // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
+               element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
            
             element.poisonTime -= 1
