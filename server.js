@@ -5480,7 +5480,7 @@ var poisonLoop = (() => {
            
             if (!element.invuln) {
               // element.health.amount -= element.health.max / (55 - element.poisonLevel)
-              element.shield.amount -= element.shield.max - 1
+              // element.shield.amount -= element.shield.max - 1
             }
            
             element.poisonTime -= 1
