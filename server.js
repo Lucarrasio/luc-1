@@ -180,6 +180,12 @@ room.findType('edge');
         } while (!room.isIn(type, location));
         return location;
     };
+room.center = () => {
+    return {
+        x: room.width / 2,
+        y: room.height / 2,
+    };
+};
 util.log(room.width + ' x ' + room.height + ' room initalized.  Max food: ' + room.maxFood + ', max nest food: ' + (room.maxFood * room.nestFoodAmount) + '.');
 
 // Define a vector
@@ -6487,6 +6493,17 @@ var maintainloop = (() => {
                 o.team = -100;
         }
     };
+  let spawnSomething = (() => {
+    let timer = 0;
+    return census => {
+        if (timer >= 30 * 5) {
+            timer = 0;
+            let spot = room.center();
+            let o = new Entity(spot);
+            o.define(Class.something);
+        } else if (!census.something) timer++;
+    };
+})();
    let teamWon = team => {
       setTimeout(() => sockets.broadcast(team + ' HAS WON THE GAME!'), 1e3)
       setTimeout(() => closemode(), 5e3)
@@ -6529,6 +6546,7 @@ var maintainloop = (() => {
                 miniboss: 0,
                mothership: 0,
                 tank: 0,
+              something: 0,
             };    
             let npcs = entities.map(function npcCensus(instance) {
                 if (census[instance.type] != null) {
@@ -6539,6 +6557,8 @@ var maintainloop = (() => {
             // Spawning
             spawnCrasher(census);
             spawnBosses(census);
+            spawnSomething(census);
+         
           if (bots.length < c.BOTS) {
                     let o = new Entity(room.random());
                     o.color = 12;
