@@ -5248,11 +5248,10 @@ var iceLoop = (() => {
             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
-              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+              element.sendMessage('You have been killed ' + element.iceededBy.name + ' with Ice.')
             }
           }
-           
-        if (element.iceed && element.type == 'miniboss') {
+            if (element.iceed && element.type == 'miniboss') {
              let x = element.size + 10
             let y = element.size + 10
             Math.random() < 0.5 ? x *= -1 : x
@@ -5266,8 +5265,8 @@ var iceLoop = (() => {
             o.define(Class['iceEffect'])
           
             if (!element.invuln) {
-              element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
-              element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+              element.velocity.x -= element.velocity.x / (0.5 - element.iceLevel);
+              element.velocity.y -= element.velocity.y / (0.5 - element.iceLevel);
                  }
             element.iceTime -= 1
             if (element.iceTime <= 0) element.iceed = false
@@ -5275,9 +5274,35 @@ var iceLoop = (() => {
             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
-              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+              element.sendMessage('You have been killed ' + element.iceededBy.name + ' with Ice.')
             }
           }
+//         if (element.iceed && element.type == 'miniboss') {
+//              let x = element.size + 10
+//             let y = element.size + 10
+//             Math.random() < 0.5 ? x *= -1 : x
+//             Math.random() < 0.5 ? y *= -1 : y
+//             Math.random() < 0.5 ? x *= Math.random() + 1 : x
+//             Math.random() < 0.5 ? y *= Math.random() + 1 : y
+//             var o = new Entity({
+//             x: element.x + x,
+//             y: element.y + y
+//             })
+//             o.define(Class['iceEffect'])
+          
+//             if (!element.invuln) {
+//               element.velocity.x -= element.velocity.x / (0.8 - element.iceLevel);
+//               element.velocity.y -= element.velocity.y / (0.8 - element.iceLevel);
+//                  }
+//             element.iceTime -= 1
+//             if (element.iceTime <= 0) element.iceed = false
+           
+//             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
+//               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
+//               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
+//               element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+//             }
+//           }
         if (element.iceed && element.type == 'mothership') {
              let x = element.size + 10
             let y = element.size + 10
@@ -5301,7 +5326,7 @@ var iceLoop = (() => {
             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
-              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+              element.sendMessage('You have been killed ' + element.iceededBy.name + ' with Ice.')
             }
           }
         if (element.iceed && element.type == 'food') {
@@ -5327,7 +5352,7 @@ var iceLoop = (() => {
             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
-              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+              element.sendMessage('You have been killed ' + element.iceededBy.name + ' with Ice.')
             }
           }
         if (element.iceed && element.type == 'crasher') {
@@ -5353,7 +5378,7 @@ var iceLoop = (() => {
             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
-              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+              element.sendMessage('You have been killed ' + element.iceededBy.name + ' with Ice.')
             }
           }
         if (element.iceed && element.type == 'bullet') {
@@ -5379,7 +5404,7 @@ var iceLoop = (() => {
             if (element.health.amount <= 0 && element.iceedBy != undefined && element.iceedBy.skill != undefined) {
               element.iceedBy.skill.score += Math.ceil(util.getJackpot(element.iceedBy.skill.score));
               element.iceedBy.sendMessage('You killed ' + element.name + ' with Ice.');
-              element.sendMessage('You have been killed by ' + element.iceededBy.name + ' with Ice.')
+              element.sendMessage('You have been killed ' + element.iceededBy.name + ' with Ice.')
             }
           }
       }
@@ -5435,7 +5460,7 @@ var poisonLoop = (() => {
             if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
               element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
               element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
-              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+              element.sendMessage('You have been killed ' + element.poisonedBy.name + ' with poison.')
             }
           }
          if (element.poisoned && element.type == 'food') {
@@ -5462,7 +5487,7 @@ var poisonLoop = (() => {
             if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
               element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
               element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
-              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+              element.sendMessage('You have been killed ' + element.poisonedBy.name + ' with poison.')
             }
           }
          if (element.poisoned && element.type == 'miniboss') {
@@ -5490,7 +5515,7 @@ var poisonLoop = (() => {
             if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
               element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
               element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
-              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+              element.sendMessage('You have been killed ' + element.poisonedBy.name + ' with poison.')
             }
           }
          if (element.poisoned && element.type == 'mothership') {
@@ -5518,7 +5543,7 @@ var poisonLoop = (() => {
             if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
               element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
               element.poisonedBy.sendMessage('You killed ' + element.name + ' with poison.');
-              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+              element.sendMessage('You have been killed ' + element.poisonedBy.name + ' with poison.')
             }
           }
         if (element.poisoned && element.type == 'crasher') {
@@ -5546,7 +5571,7 @@ var poisonLoop = (() => {
             if (element.health.amount <= 0 && element.poisonedBy != undefined && element.poisonedBy.skill != undefined) {
               element.poisonedBy.skill.score += Math.ceil(util.getJackpot(element.poisonedBy.skill.score));
               element.poisonedBy.sendMessage('You killed ' + element.name + "'s'" + element.label + ' with poison.');
-              element.sendMessage('You have been killed by ' + element.poisonedBy.name + ' with poison.')
+              element.sendMessage('You have been killed ' + element.poisonedBy.name + ' with poison.')
             }
           }
           if (element.poisoned && element.type == 'bullet') {
