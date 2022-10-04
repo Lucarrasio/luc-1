@@ -2418,7 +2418,7 @@ this.guns.color = 19;
                 case 'purple':
             this.color = 15;
             break;
-                case 'lblue':
+                case 'lgreen':
             this.color = 1;
             break;
                 case 'lavender':
