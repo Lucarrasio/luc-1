@@ -5452,7 +5452,7 @@ var poisonLoop = (() => {
             o.define(Class['poisonEffect'])
            
             if (!element.invuln) {
-              element.health.amount -= element.health.max / (55 - element.poisonLevel)
+              element.shield.amount -= element.shield.max - 1
               // element.shield.amount -= element.shield.max / (35 - element.poisonLevel)
             }
            
@@ -6561,11 +6561,11 @@ var maintainloop = (() => {
             let a = { };
             switch (level) {
                 case 0: a = Class.egg; break;
-                case 1: a = Class.egg; break;
-                case 2: a = Class.egg; break;
-                case 3: a = Class.egg; break;
-                case 4: a = Class.egg; break;
-                case 5: a = Class.egg; break;
+                case 1: a = Class.square; break;
+                case 2: a = Class.triangle; break;
+                case 3: a = Class.pentagon; break;
+                case 4: a = Class.bigPentagon; break;
+                case 5: a = Class.hugePentagon; break;
                 default: throw('bad food level');
             }
             if (a !== {}) {
