@@ -6759,65 +6759,65 @@ var maintainloop = (() => {
                 sum: 0,
             };
             // Do the censusNest
-    //         food = entities.map(instance => {
-    //             try {
-    //                 if (instance.type === 'tank') {
-    //                     census.tank++;
-    //                 } else if (instance.foodLevel > -1) { 
-    //                     if (room.isIn('nest', { x: instance.x, y: instance.y, })) { censusNest.sum++; censusNest[instance.foodLevel]++; }
-    //                     else { census.sum++; census[instance.foodLevel]++; }
-    //                     return instance;
-    //                 }
-    //             } catch (err) { util.error(instance.label); util.error(err); instance.kill(); }
-    //         }).filter(e => { return e; });     
-    //         // Sum it up   
-    //         let maxFood = 1 + room.maxFood + 15 * census.tank;      
-    //         let maxNestFood = 1 + room.maxFood * room.nestFoodAmount;
-    //         let foodAmount = census.sum;
-    //         let nestFoodAmount = censusNest.sum;
-    //         /*********** ROT OLD SPAWNERS **********/
-    //         foodSpawners.forEach(spawner => { if (ran.chance(1 - foodAmount/maxFood)) spawner.rot(); });
-    //         /************** MAKE FOOD **************/
-    //         while (ran.chance(0.8 * (1 - foodAmount * foodAmount / maxFood / maxFood))) {
-    //             switch (ran.chooseChance(10, 2, 1)) {
-    //             case 0: makeGroupedFood(); break;
-    //             case 1: makeDistributedFood(); break;
-    //             case 2: makeCornerFood(); break;
-    //             }
-    //         } 
-    //         while (ran.chance(0.5 * (1 - nestFoodAmount * nestFoodAmount / maxNestFood / maxNestFood))) makeNestFood();
-    //         /************* UPGRADE FOOD ************/
-    //         if (!food.length) return 0;
-    //         for (let i=Math.ceil(food.length / 100); i>0; i--) {
-    //             let o = food[ran.irandom(food.length - 1)], // A random food instance
-    //                 oldId = -1000,
-    //                 overflow, location;
-    //             // Bounce 6 times
-    //             for (let j=0; j<6; j++) { 
-    //                 overflow = 10;
-    //                 // Find the nearest one that's not the last one
-    //                 do { o = nearest(food, { x: ran.gauss(o.x, 30), y: ran.gauss(o.y, 30), });
-    //                 } while (o.id === oldId && --overflow);        
-    //                 if (!overflow) continue;
-    //                 // Configure for the nest if needed
-    //                 let proportions = c.FOOD,
-    //                     cens = census,
-    //                     amount = foodAmount;
-    //                 if (room.isIn('nest', o)) {
-    //                     proportions = c.FOOD_NEST;
-    //                     cens = censusNest;
-    //                     amount = nestFoodAmount;
-    //                 }
-    //                 // Upgrade stuff
-    //                 o.foodCountup += Math.ceil(Math.abs(ran.gauss(0, 10)));
-    //                 while (o.foodCountup >= (o.foodLevel + 1) * 100) {
-    //                     o.foodCountup -= (o.foodLevel + 1) * 100;
-    //                     if (ran.chance(1 - cens[o.foodLevel + 1] / amount / proportions[o.foodLevel + 1])) {
-    //                         o.define(getFoodClass(o.foodLevel + 1));
-    //                     }
-    //                 }
-    //             }
-    //         }
+           food = entities.map(instance => {
+                try {
+                   if (instance.type === 'tank') {
+                       census.tank++;
+                   } else if (instance.foodLevel > -1) { 
+                       if (room.isIn('nest', { x: instance.x, y: instance.y, })) { censusNest.sum++; censusNest[instance.foodLevel]++; }
+                       else { census.sum++; census[instance.foodLevel]++; }
+                       return instance;
+                   }
+               } catch (err) { util.error(instance.label); util.error(err); instance.kill(); }
+           }).filter(e => { return e; });     
+           // Sum it up   
+           let maxFood = 1 + room.maxFood + 15 * census.tank;      
+           let maxNestFood = 1 + room.maxFood * room.nestFoodAmount;
+           let foodAmount = census.sum;
+           let nestFoodAmount = censusNest.sum;
+           /*********** ROT OLD SPAWNERS **********/
+           foodSpawners.forEach(spawner => { if (ran.chance(1 - foodAmount/maxFood)) spawner.rot(); });
+           /************** MAKE FOOD **************/
+           while (ran.chance(0.8 * (1 - foodAmount * foodAmount / maxFood / maxFood))) {
+               switch (ran.chooseChance(10, 2, 1)) {
+               case 0: makeGroupedFood(); break;
+               case 1: makeDistributedFood(); break;
+               case 2: makeCornerFood(); break;
+               }
+           } 
+           while (ran.chance(0.5 * (1 - nestFoodAmount * nestFoodAmount / maxNestFood / maxNestFood))) makeNestFood();
+           /************* UPGRADE FOOD ************/
+           if (!food.length) return 0;
+           for (let i=Math.ceil(food.length / 100); i>0; i--) {
+               let o = food[ran.irandom(food.length - 1)], // A random food instance
+                   oldId = -1000,
+                   overflow, location;
+               // Bounce 6 times
+               for (let j=0; j<6; j++) { 
+                   overflow = 10;
+                   // Find the nearest one that's not the last one
+                   do { o = nearest(food, { x: ran.gauss(o.x, 30), y: ran.gauss(o.y, 30), });
+                   } while (o.id === oldId && --overflow);        
+                   if (!overflow) continue;
+                    // Configure for the nest if needed
+                   let proportions = c.FOOD,
+                       cens = census,
+                       amount = foodAmount;
+                   if (room.isIn('nest', o)) {
+                       proportions = c.FOOD_NEST;
+                       cens = censusNest;
+                       amount = nestFoodAmount;
+                   }
+                   // Upgrade stuff
+                   o.foodCountup += Math.ceil(Math.abs(ran.gauss(0, 10)));
+                   while (o.foodCountup >= (o.foodLevel + 1) * 100) {
+                       o.foodCountup -= (o.foodLevel + 1) * 100;
+                       if (ran.chance(1 - cens[o.foodLevel + 1] / amount / proportions[o.foodLevel + 1])) {
+                           o.define(getFoodClass(o.foodLevel + 1));
+                       }
+                   }
+                }
+           }
          };
      })();
          
