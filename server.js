@@ -6950,4 +6950,3 @@ setInterval(shockLoop, room.cycleSpeed * 7);
 setInterval(iceLoop, room.cycleSpeed * 7);  
 setInterval(maintainloop, 200);
 setInterval(speedcheckloop, 1000);
-at
