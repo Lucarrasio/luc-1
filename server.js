@@ -4574,12 +4574,11 @@ const sockets = (() => {
                   }
                 }
                 // Deltas
-                let minimapAll = new Delta(5, () => {
+                 let minimapAll = new Delta(5, () => {
                   let all = []
                   for (let my of entities)
                     if ((my.type === 'wall' && my.alpha > 0.2) ||
                          my.type === 'miniboss' ||
-                         my.type === 'mothership' ||
                         (my.type === 'tank' && my.lifetime))
                       all.push({
                         id: my.id,
@@ -4603,7 +4602,7 @@ const sockets = (() => {
                           util.clamp(Math.floor(256 * my.x / room.width), 0, 255),
                           util.clamp(Math.floor(256 * my.y / room.height), 0, 255),
                           my.color,
-                    ]
+                        ]
                       })
                   return all
                 }))
