@@ -4287,7 +4287,7 @@ const sockets = (() => {
                 // This is the public information we need for broadcasting
                 let readlb
                 // Define fundamental functions
-                const getminimap = (() => {
+                /*const getminimap = (() => {
                   let all = {
                     walls: [],
                     players: {},
@@ -4494,7 +4494,7 @@ const sockets = (() => {
                         // Return the reader
                         return full => full ? lb.full : lb.updates
                     }
-                })()
+                })() */
                 // Util
                 let getBarColor = entry => {
                   switch (entry.team) {
@@ -4603,7 +4603,7 @@ const sockets = (() => {
                           util.clamp(Math.floor(256 * my.x / room.width), 0, 255),
                           util.clamp(Math.floor(256 * my.y / room.height), 0, 255),
               my.color,
-                Math.round(my.SIZE),
+               
                     ]
                       })
                   return all
