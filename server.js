@@ -4287,7 +4287,7 @@ const sockets = (() => {
                 // This is the public information we need for broadcasting
                 let readlb
                 // Define fundamental functions
-                /*const getminimap = (() => {
+                const getminimap = (() => {
                   let all = {
                     walls: [],
                     players: {},
@@ -4330,7 +4330,7 @@ const sockets = (() => {
                         )
                       }
                   }, 250)
-                  return all
+                  return all 
                 })()
                 const getleaderboard = (() => {
                     let lb = { full: [], updates: [], }
@@ -4494,7 +4494,7 @@ const sockets = (() => {
                         // Return the reader
                         return full => full ? lb.full : lb.updates
                     }
-                })()*/
+                })()
                 // Util
                 let getBarColor = entry => {
                   switch (entry.team) {
@@ -4602,8 +4602,9 @@ const sockets = (() => {
                         data: [
                           util.clamp(Math.floor(256 * my.x / room.width), 0, 255),
                           util.clamp(Math.floor(256 * my.y / room.height), 0, 255),
-                          my.color,
-                        ]
+              my.color,
+                Math.round(my.SIZE),
+                    ]
                       })
                   return all
                 }))
@@ -6951,3 +6952,4 @@ setInterval(shockLoop, room.cycleSpeed * 7);
 setInterval(iceLoop, room.cycleSpeed * 7);  
 setInterval(maintainloop, 200);
 setInterval(speedcheckloop, 1000);
+at
