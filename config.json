@@ -14,7 +14,7 @@
   "verbose": true,
   "WIDTH": 4500,
   "HEIGHT": 4500,
-  "MODE": "tdm",
+  "MODE": "ffa",
   "RANDOM_COLORS": false,
   "BANNED_CHARACTER_REGEX": "/[\uFDFD\u200E\u0000]/gi",
   "ROOM_SETUP": [
