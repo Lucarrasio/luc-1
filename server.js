@@ -2578,6 +2578,9 @@ class Entity {
             this.maxSpeed = this.topSpeed;
             this.damp = 0.05;
             break;
+             case 'needle':
+        this.SIZE += 0.8;
+        break;
         case 'motor':
             this.maxSpeed = 0;            
             if (this.topSpeed) {
