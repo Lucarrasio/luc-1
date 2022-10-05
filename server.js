@@ -8,8 +8,10 @@ require('google-closure-library');
 goog.require('goog.structs.PriorityQueue');
 goog.require('goog.structs.QuadTree');
 
+
 // Import game settings.
 const c = require('./config.json');
+
 
 // Import utilities.
 const util = require('./lib/util');
@@ -222,7 +224,24 @@ var Class = (() => {
     }
     return def;
 })();
-
+function getEntitiesFromRange(location, range) {
+  let box = [
+    location.x - range,
+    location.y - range,
+    location.x + range,
+    location.y + range,
+  ];
+  return boxIntersect([box], activeAabb)
+    .map((v) => {
+      let e = activeEntities[v[1]];
+      if (e.valid()) {
+        return e;
+      }
+    })
+    .filter((e) => {
+      return e;
+    });
+}
 // Define IOs (AI)
 function nearest(array, location, test = () => { return true; }) {
     let list = new goog.structs.PriorityQueue();
