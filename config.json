@@ -1,21 +1,22 @@
-{
+
+  {
   "host": "0.0.0.0",
   "servesStatic": true,
   "port": 3000,
-  "networkUpdateFactor": 384,  
+  "networkUpdateFactor": 24,
   "socketWarningLimit": 5,
-  "networkFrontlog": 40,
-  "networkFallbackTime": 0,
-  "visibleListInterval": 1000,
+  "networkFrontlog": 1,
+  "networkFallbackTime": 30,
+  "visibleListInterval": 600,
   "gameSpeed": 1,
   "runSpeed": 1.5,
   "maxHeartbeatInterval": 300000,
   "verbose": true,
-  "WIDTH": 3000,
-  "HEIGHT": 3000,
+  "WIDTH": 4500,
+  "HEIGHT": 4500,
   "MODE": "tdm",
-  "RANDOM_COLORS": true,
-  "BANNED_CHARACTER_REGEX": "/[\uFDFD\u200E\u0000]/gi", 
+  "RANDOM_COLORS": false,
+  "BANNED_CHARACTER_REGEX": "/[\uFDFD\u200E\u0000]/gi",
   "ROOM_SETUP": [
     [ "bas1", "bas1", "bas1", "norm", "norm", "norm", "norm", "norm", "norm", "norm", "norm" ],
     [ "bas1", "bas1", "bas1", "norm", "norm", "norm", "norm", "nest", "nest", "norm", "norm" ],
@@ -68,3 +69,5 @@
   "BOTS": 0,
   "GLASS_HEALTH_FACTOR": 2
 }
+ 
+
