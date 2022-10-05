@@ -6452,27 +6452,27 @@ var maintainloop = (() => {
                         break;
                     case 11: 
                         choice = [[Class.bow,], 3, 'a', 'norm']; 
-                      // sockets.broadcast("Here comes 'waterboy'!");
+                      sockets.broadcast("Here comes 'waterboy'!");
                         break;
                      case 12: 
                         choice = [[Class.bow, Class.aquamarine, Class.visultima, Class.trapefighter, Class.arrasian], 3, 'a', 'norm']; 
-                      // sockets.broadcast("Here comes 'waterboy'!");
+                       sockets.broadcast("Here comes 'waterboy'!");
                         break;
                      case 13: 
                         choice = [[Class.bowCore, Class.bowShard], 3, 'a', 'norm']; 
-                      // sockets.broadcast("Here comes 'waterboy'!");
+                      sockets.broadcast("Here comes 'waterboy'!");
                         break;
                      case 14: 
                         choice = [[Class.blitzkrieg, Class.sheathBoss], 2, 'castle', 'norm']; 
-                      // sockets.broadcast("Here comes 'waterboy'!");
+                       sockets.broadcast("Here comes 'waterboy'!");
                         break;
                     case 15: 
                         choice = [[Class.elite_bombadier, Class.elite_trapper], 2, 'a', 'norm']; 
-                      // sockets.broadcast("Here comes 'waterboy'!");
+                      sockets.broadcast("Here comes 'waterboy'!");
                         break;
                     case 16: 
                         choice = [[Class.xyv,Class.gunshipminiboss], 3, 'castle', 'nest']; 
-                      // sockets.broadcast("Here comes 'waterboy'!");
+                       sockets.broadcast("Here comes 'waterboy'!");
                         break;
                     
                 }
@@ -6845,7 +6845,7 @@ var maintainloop = (() => {
     return () => {
         // Do stuff
         makenpcs();      
-        makefood(); 
+        // makefood(); 
         // Regen health and update the grid
         entities.forEach(instance => {
             if (instance.shield.max) {
