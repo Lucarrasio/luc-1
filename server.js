@@ -4602,8 +4602,7 @@ const sockets = (() => {
                         data: [
                           util.clamp(Math.floor(256 * my.x / room.width), 0, 255),
                           util.clamp(Math.floor(256 * my.y / room.height), 0, 255),
-              my.color,
-               
+                          my.color,
                     ]
                       })
                   return all
