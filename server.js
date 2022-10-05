@@ -515,7 +515,14 @@ class io_nearestDifferentMaster extends IO {
             if (!e.invuln) {
             if (e.master.master.team !== this.body.master.master.team) {
             if (e.master.master.team !== -101) {
-            if (e.type === 'tank' || e.type === 'crasher' || (!this.body.aiSettings.shapefriend && e.type === 'food')) {
+            // if (e.type === 'tank' || 
+            //     e.type === 'crasher' || (!this.body.aiSettings.shapefriend && e.type === 'food')) 
+              if (
+                  e.type === "tank" ||
+                  e.type === "crasher" ||
+                  e.type === "miniboss" ||
+                  (!this.body.aiSettings.shapefriend && e.type === "food")
+                ) {
             if (Math.abs(e.x - m.x) < range && Math.abs(e.y - m.y) < range) {
             if (!this.body.aiSettings.blind || (Math.abs(e.x - mm.x) < range && Math.abs(e.y - mm.y) < range)) return e;
             } } } } } }
@@ -620,6 +627,183 @@ class io_nearestDifferentMaster extends IO {
         return {};
     }
 }
+class io_trapnearestDifferentMaster extends IO {//トラップ用nearestDifferentMaster
+  constructor(body) {
+    super(body);
+    this.targetLock = undefined;
+    this.tick = ran.irandom(30);
+    this.lead = 0;
+    this.validTargets = this.buildList(body.fov / 2);
+    this.oldHealth = body.health.display();
+  }
+
+  buildList(range) {
+    // Establish whom we judge in reference to
+    let m = { x: this.body.x, y: this.body.y },
+      mm = { x: this.body.master.master.x, y: this.body.master.master.y },
+      mostDangerous = 0,
+      sqrRange = range * range,
+      keepTarget = false;
+    // Filter through everybody...
+    let out = getEntitiesFromRange(m, range)
+      .map((e) => {
+        // Only look at those within our view, and our parent's view, not dead, not our kind, not a bullet/trap/block etc
+        if (e.health.amount > 0) {
+          if (!e.invuln) {
+            if (e.master.master.team !== this.body.master.master.team) {
+              if (e.master.master.team !== -101) {
+                if (
+                  e.type === "tank" ||
+                  e.type === "crasher" ||
+                  e.type === "miniboss" ||
+                  (!this.body.aiSettings.shapefriend && e.type === "food")
+                ) {
+                  if (
+                    Math.abs(e.x - m.x) < range &&
+                    Math.abs(e.y - m.y) < range
+                  ) {
+                    if (
+                      !this.body.aiSettings.blind ||
+                      (Math.abs(e.x - mm.x) < range &&
+                        Math.abs(e.y - mm.y) < range)
+                    )
+                      return e;
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      .filter((e) => {
+        return e;
+      });
+
+    if (!out.length) return [];
+
+    out = out
+      .map((e) => {
+        // Only look at those within range and arc (more expensive, so we only do it on the few)
+        let yaboi = false;
+        if (
+          Math.pow(this.body.x - e.x, 2) + Math.pow(this.body.y - e.y, 2) <
+          sqrRange
+        ) {
+          if (this.body.firingArc == null || this.body.aiSettings.view360) {
+            yaboi = true;
+          } else if (
+            Math.abs(
+              util.angleDifference(
+                util.getDirection(this.body, e),
+                this.body.firingArc[0]
+              )
+            ) < this.body.firingArc[1]
+          )
+            yaboi = true;
+        }
+        if (yaboi) {
+          mostDangerous = Math.max(e.dangerValue, mostDangerous);
+          return e;
+        }
+      })
+      .filter((e) => {
+        // Only return the highest tier of danger
+        if (e != null) {
+          if (this.body.aiSettings.farm || e.dangerValue === mostDangerous) {
+            if (this.targetLock) {
+              if (e.id === this.targetLock.id) keepTarget = true;
+            }
+            return e;
+          }
+        }
+      });
+    // Reset target if it's not in there
+    if (!keepTarget) this.targetLock = undefined;
+    return out;
+  }
+
+  think(input) {
+    // Override target lock upon other commands
+    if (input.main || input.alt || this.body.master.autoOverride) {
+      this.targetLock = undefined;
+      return {};
+    }
+    // Otherwise, consider how fast we can either move to ram it or shoot at a potiential target.
+    let tracking = this.body.topSpeed,
+      range = this.body.fov / 2;
+    // Use whether we have functional guns to decide
+    for (let i = 0; i < this.body.guns.length; i++) {
+      if (this.body.guns[i].canShoot && !this.body.aiSettings.skynet) {
+        let v = this.body.guns[i].trapgetTracking();
+        tracking = v.speed;
+        range = Math.min(range, v.speed * v.range);
+        break;
+      }
+    }
+    // Check if my target's alive
+    if (this.targetLock) {
+      if (this.targetLock.health.amount <= 0) {
+        this.targetLock = undefined;
+        this.tick = 100;
+      }
+    }
+    // Think damn hard
+    if (this.tick++ > 15 * roomSpeed) {
+      this.tick = 0;
+      this.validTargets = this.buildList(range);
+      // Ditch our old target if it's invalid
+      if (
+        this.targetLock &&
+        this.validTargets.indexOf(this.targetLock) === -1
+      ) {
+        this.targetLock = undefined;
+      }
+      // Lock new target if we still don't have one.
+      if (this.targetLock == null && this.validTargets.length) {
+        this.targetLock =
+          this.validTargets.length === 1
+            ? this.validTargets[0]
+            : nearest(this.validTargets, { x: this.body.x, y: this.body.y });
+        this.tick = -90;
+      }
+    }
+    // Lock onto whoever's shooting me.
+    // let damageRef = (this.body.bond == null) ? this.body : this.body.bond;
+    // if (damageRef.collisionArray.length && damageRef.health.display() < this.oldHealth) {
+    //     this.oldHealth = damageRef.health.display();
+    //     if (this.validTargets.indexOf(damageRef.collisionArray[0]) === -1) {
+    //         this.targetLock = (damageRef.collisionArray[0].master.id === -1) ? damageRef.collisionArray[0].source : damageRef.collisionArray[0].master;
+    //     }
+    // }
+    // Consider how fast it's moving and shoot at it
+    if (this.targetLock != null && this.targetLock.valid()) {
+      let radial = this.targetLock.velocity;
+      let diff = {
+        x: this.targetLock.x - this.body.x,
+        y: this.targetLock.y - this.body.y,
+      };
+      /// Refresh lead time
+      if (this.tick % 4 === 0) {
+        this.lead = 0;
+        // Find lead time (or don't)
+        if (!this.body.aiSettings.chase) {
+          let toi = timeOfImpact(diff, radial, tracking);
+          this.lead = toi;
+        }
+      }
+      // And return our aim
+      return {
+        target: {
+          x: diff.x + this.lead * radial.x,
+          y: diff.y + this.lead * radial.y,
+        },
+        fire: true,
+        main: true,
+      };
+    }
+    return {};
+  }
+                                        }
 class io_avoid extends IO {
     constructor(body) {
         super(body);
