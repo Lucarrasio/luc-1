@@ -6841,9 +6841,9 @@ var maintainloop = (() => {
             let a = { };
             switch (level) {
                 case 0: a = Class.egg; break;
-                case 1: a = Class.bigPentagon; break;
-                case 2: a = Class.bigPentagon; break;
-                case 3: a = Class.hugePentagon; break;
+                case 1: a = Class.square; break;
+                case 2: a = Class.triangle; break;
+                case 3: a = Class.pentagon; break;
                 case 4: a = Class.bigPentagon; break;
                 case 5: a = Class.hugePentagon; break;
                 default: throw('bad food level');
@@ -7048,7 +7048,7 @@ var maintainloop = (() => {
     return () => {
         // Do stuff
         makenpcs();      
-         makefood(); 
+//         makefood(); 
         // Regen health and update the grid
         entities.forEach(instance => {
             if (instance.shield.max) {
