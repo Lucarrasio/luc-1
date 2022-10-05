@@ -5178,6 +5178,7 @@ var gameloop = (() => {
             }     
         };
     })();
+   
     // Living stuff
     function entitiesactivationloop(my) {
         // Update collisions.
