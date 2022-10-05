@@ -6408,7 +6408,7 @@ var maintainloop = (() => {
                 let choice = [];
                 switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)) {
                     case 0: 
-                        choice = [[Class.elite_destroyer], 2, 'a', 'nest'];
+                        choice = [[Class.elite_destroyer, Class.elite_sprayer], 2, 'a', 'nest'];
                         break;
                     case 1: 
                         choice = [[Class.palisade], 1, 'castle', 'norm']; 
