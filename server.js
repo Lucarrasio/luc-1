@@ -2581,6 +2581,7 @@ class Entity {
              case 'needle':
         this.SIZE -= 0.05;
          this.maxSpeed = this.topSpeed;
+            this.damage -= 0.05;
         break;
         case 'motor':
             this.maxSpeed = 0;            
