@@ -2579,7 +2579,7 @@ class Entity {
             this.damp = 0.05;
             break;
              case 'needle':
-        this.SIZE -= 0.05;
+        this.SIZE -= 0.04;
          this.maxSpeed = this.topSpeed;
             this.damage -= 0.05;
         break;
