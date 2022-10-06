@@ -6699,10 +6699,10 @@ var maintainloop = (() => {
                 let choice = [];
                 switch (ran.chooseChance(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)) {
                     case 0: 
-                        choice = [[Class.elite_destroyer, Class.elite_sprayer, Class.elite_gunner, Class], 2, 'a', 'nest'];
+                        choice = [[Class.elite_destroyer, Class.elite_sprayer, Class.elite_gunner, Class.elite_battleship], 2, 'a', 'nest'];
                         break;
                     case 1: 
-                       choice = [[Class.elite_destroyer, Class.elite_sprayer, Class.elite_gunner, Class], 3, 'a', 'nest'];
+                       choice = [[Class.elite_destroyer, Class.elite_sprayer, Class.elite_gunner, Class.elite_battleship], 3, 'a', 'nest'];
                         break;
                      case 2: 
                         choice = [[Class.skimboss, Class.palisade], 1, 'castle', 'norm']; 
@@ -6717,7 +6717,8 @@ var maintainloop = (() => {
                           sockets.broadcast('Long time no see...');
                         break;
                     case 5: 
-                        choice = [[Class.elite_gunner], 2, 'a', 'nest'];
+                        choice = [[Class.zaphkiel, Class.paladin, Class.freyja, Class.nyx, Class.theia, Class.atlas], 1, 'norm'];
+                         sockets.broadcast('The world tremors as the Celestials are reborn anew!');
                         break;
                     case 6: 
                         choice = [[Class.elite_trapper], 1, 'a', 'nest'];
