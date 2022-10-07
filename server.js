@@ -6589,7 +6589,7 @@ var maintainloop = (() => {
       let o = new Entity(loc)
       o.define(type)
       o.team = mode || -100
-      o.color = [16][-mode]
+      o.color = [16][-mode] 
         }
          let createAutoMaze = (loc, mode, type) => {
       let o = new Entity(loc)
