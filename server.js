@@ -7115,6 +7115,7 @@ var maintainloop = (() => {
                     // Configure for the nest if needed
                    let proportions = c.FOOD,
                        cens = census,
+                       
                        amount = foodAmount;
                    if (room.isIn('nest', o)) {
                        proportions = c.FOOD_NEST;
