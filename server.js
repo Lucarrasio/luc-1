@@ -2988,7 +2988,8 @@ this.guns.color = 19;
                 let divForce = this.type == 'tank' ? 110 : 100
                 this.velocity.x -= (loc.x - cent.x) / divForce
                 this.velocity.y -= (loc.y - cent.y) / divForce
-                if ((loc.x < room['port'][z].x + (10 / room.ygrid * (room.height / 100))) && (loc.x > room['port'][z].x - (10 / room.ygrid * (room.height / 100))) && (loc.y < room['port'][z].y + (10 / room.ygrid * (room.height / 100))) && loc.y > room['port'][z].y - (10 / room.ygrid * (room.height / 100))) {
+                if ((loc.x < room['port'][z].x + (10 / room.ygrid * (room.height / 100))) && (loc.x > room['port'][z].x - (10 / room.ygrid * (room.height / 100))) && 
+                    (loc.y < room['port'][z].y + (10 / room.ygrid * (room.height / 100))) && loc.y > room['port'][z].y - (10 / room.ygrid * (room.height / 100))) {
                     this.x = room['port'][x].x
                     this.y = room['port'][x].y
                     this.velocity.x += (ran.randomRange(0, 1) < 0.5) ? ran.randomRange(20, 30) : ran.randomRange(-30, -20)
