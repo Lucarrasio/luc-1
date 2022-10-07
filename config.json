@@ -28,8 +28,8 @@
     [ "norm", "norm", "norm", "nest", "nest", "nest",  "nest", "nest", "nest", "norm", "norm", "norm" ],
     [ "norm", "norm", "norm", "norm", "norm", "nest",  "nest", "norm", "norm", "norm", "norm", "norm" ],
     [ "norm", "norm", "norm", "norm", "norm", "nest",  "nest", "norm", "norm", "norm", "norm", "norm" ],
-    [ "norm", "norm", "norm", "norm", "norm", "norm",  "norm", "norm", "norm", "norm", "norm", "norm" ],
-    [ "norm", "norm", "norm", "norm", "norm", "norm",  "norm", "norm", "norm", "norm", "norm", "norm" ],
+    [ "norm", "norm", "norm", "norm", "norm", "door",  "ctrl", "norm", "norm", "norm", "norm", "norm" ],
+    [ "norm", "norm", "norm", "norm", "norm", "door",  "norm", "norm", "norm", "norm", "norm", "norm" ],
     [ "bas2", "norm", "norm", "norm", "norm", "norm",  "norm", "norm", "norm", "norm", "norm", "bas3" ]
     
    

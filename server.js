@@ -167,6 +167,7 @@ room.findType('edge');
             let b = Math.floor(location.x * room.xgrid / room.width);
             let v = room.setup[a][b];
             return v !== 'nest';
+          
         } else {
             return false;
         }
