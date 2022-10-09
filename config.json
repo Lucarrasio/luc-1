@@ -72,7 +72,7 @@
   "MIN_SPEED": 0.001,
   "FOOD_AMOUNT": 0.01, 
   "SKILL_BOOST": 5,
-  "BOTS": 0,
+  "BOTS": 10,
   "GLASS_HEALTH_FACTOR": 2
 }
  
