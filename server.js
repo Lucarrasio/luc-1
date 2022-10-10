@@ -535,8 +535,8 @@ class io_nearestDifferentMaster extends IO {
             if (!e.invuln) {
             if (e.master.master.team !== this.body.master.master.team) {
             if (e.master.master.team !== -101) {
-            // if (e.type === 'tank' || 
-            //     e.type === 'crasher' || (!this.body.aiSettings.shapefriend && e.type === 'food')) 
+            if (e.type === 'tank' || 
+            e.type === 'crasher' || (!this.body.aiSettings.shapefriend && e.type === 'food')) 
               if (
                   e.type === "tank" ||
                   e.type === "crasher" ||
@@ -610,14 +610,14 @@ class io_nearestDifferentMaster extends IO {
                 this.tick = -90;
             }
         }
-        // Lock onto whoever's shooting me.
-        // let damageRef = (this.body.bond == null) ? this.body : this.body.bond;
-        // if (damageRef.collisionArray.length && damageRef.health.display() < this.oldHealth) {
-        //     this.oldHealth = damageRef.health.display();
-        //     if (this.validTargets.indexOf(damageRef.collisionArray[0]) === -1) {
-        //         this.targetLock = (damageRef.collisionArray[0].master.id === -1) ? damageRef.collisionArray[0].source : damageRef.collisionArray[0].master;
-        //     }
-        // }
+         // Lock onto whoever's shooting me.
+         let damageRef = (this.body.bond == null) ? this.body : this.body.bond;
+         if (damageRef.collisionArray.length && damageRef.health.display() < this.oldHealth) {
+             this.oldHealth = damageRef.health.display();
+             if (this.validTargets.indexOf(damageRef.collisionArray[0]) === -1) {
+                 this.targetLock = (damageRef.collisionArray[0].master.id === -1) ? damageRef.collisionArray[0].source : damageRef.collisionArray[0].master;
+             }
+         }
         // Consider how fast it's moving and shoot at it
         if (this.targetLock != null) {
             let radial = this.targetLock.velocity;
@@ -788,13 +788,13 @@ class io_trapnearestDifferentMaster extends IO {//トラップ用nearestDifferen
       }
     }
     // Lock onto whoever's shooting me.
-    // let damageRef = (this.body.bond == null) ? this.body : this.body.bond;
-    // if (damageRef.collisionArray.length && damageRef.health.display() < this.oldHealth) {
-    //     this.oldHealth = damageRef.health.display();
-    //     if (this.validTargets.indexOf(damageRef.collisionArray[0]) === -1) {
-    //         this.targetLock = (damageRef.collisionArray[0].master.id === -1) ? damageRef.collisionArray[0].source : damageRef.collisionArray[0].master;
-    //     }
-    // }
+   let damageRef = (this.body.bond == null) ? this.body : this.body.bond;
+   if (damageRef.collisionArray.length && damageRef.health.display() < this.oldHealth) {
+      this.oldHealth = damageRef.health.display();
+       if (this.validTargets.indexOf(damageRef.collisionArray[0]) === -1) {
+           this.targetLock = (damageRef.collisionArray[0].master.id === -1) ? damageRef.collisionArray[0].source : damageRef.collisionArray[0].master;
+       }
+   }
     // Consider how fast it's moving and shoot at it
     if (this.targetLock != null && this.targetLock.valid()) {
       let radial = this.targetLock.velocity;
@@ -1346,7 +1346,7 @@ class Skill {
         return this.name[skcnv[stat]];
     }
 
-    /*
+  {
     let i = skcnv[skill] % 5,
         j = (skcnv[skill] - i) / 5;
     let roundvalue = Math.round(this.bleed(i, j) * 10);
@@ -1356,7 +1356,7 @@ class Skill {
 
     return string;
     */
-
+  }
     amount(skill) {
         return this.raw[skcnv[skill]];
     }
