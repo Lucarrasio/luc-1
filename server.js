@@ -1958,6 +1958,7 @@ class Entity {
             fire: false,
             power: 0,
         };
+        this.killbullet = false;
         this.isInGrid = false;
         this.removeFromGrid = () => { if (this.isInGrid) { grid.removeObject(this); this.isInGrid = false; } };
         this.addToGrid = () => { if (!this.isInGrid && this.bond == null) { grid.addObject(this); this.isInGrid = true; } };
@@ -2079,6 +2080,9 @@ class Entity {
                 this.define(set.PARENT[i]);
             }
         }
+       if (set.KILLBULLET != null) {
+this.killbullet = set.KILLBULLET;
+}
         if (set.index != null) {
             this.index = set.index;
         }
@@ -5327,6 +5331,38 @@ var gameloop = (() => {
                 }
             }
         }
+       function healcollide(my, n,) {
+      
+              if (n.team ===my.team){
+                if (n.health.max>n.health.amount){
+                  n.health.amount +=my.damage*my.penetration*0.1;
+                  my.master.skill.score +=my.penetration*my.damage*13;
+                }
+                 if (n.health.max==n.health.amount){
+                   if (n.shield.max>n.shield.amount){
+                  n.shield.amount += my.damage
+                  my.master.skill.score += 10;
+                }}
+}
+      if (my.team!==n.team){
+        if (my.type === "kill_bullet"){
+          if (n.type !== "kill_bullet"){
+        if (n.damage <= 0){
+        }
+      else  if (n.damage > 0){
+        my.kill();}
+          }
+      }
+     if (n.type === "kill_bullet"){
+          if (my.type !== "kill_bullet"){
+        if (my.damage <= 0){}
+      else  if (n.damage > 0){
+        n.kill();}
+          }
+      } 
+      
+      
+      }}
         // The actual collision resolution function
         return collision => {
             // Pull the two objects from the collision grid      
