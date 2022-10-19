@@ -7245,7 +7245,7 @@ let server = http.createServer((req, res) => {
   switch (pathname) {
     case '/':
       res.writeHead(200)
-      res.end('<!DOCTYPE html><h3>Arras</h3>')
+      res.end('<!DOCTYPE html><h3>Arras is cool</h3>')
     break
     case '/mockups.json':
       res.setHeader('Access-Control-Allow-Origin', '*')
