@@ -7176,7 +7176,7 @@ var maintainloop = (() => {
     // Define food and food spawning
     return () => {
         // Do stuff
-       makenpcs();      
+//       makenpcs();      
         makefood(); 
         // Regen health and update the grid
         entities.forEach(instance => {
