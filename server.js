@@ -2631,9 +2631,6 @@ this.guns.color = 4;
              case 'flameColor':
             this.color = 23;
              break;
-             case 'lukas':
-            this.color = '#2CECF2';
-            break;   
           case 'giffard':
             this.color = 50;
             break;
