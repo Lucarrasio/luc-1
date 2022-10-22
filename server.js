@@ -2685,7 +2685,7 @@ this.guns.color = 19;
             break;
                 case 'guiwhite':
             this.color = 8;
-            break;
+             break;
                 case 'gold':
             this.color = 13;
             break;
