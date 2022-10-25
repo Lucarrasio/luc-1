@@ -2707,6 +2707,7 @@ this.guns.color = 19;
                 case 'brown':
             this.color = 20;
             break;
+            
         case 'swarm': 
             this.maxSpeed = this.topSpeed;
             let l = util.getDistance({ x: 0, y: 0, }, g) + 1;
