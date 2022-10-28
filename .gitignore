@@ -1,3 +1,4 @@
 lucs-server
-lib
-.config
+lucs-server/lib
+lucs-server/.config
+lucs-server/.data
